@@ -9,13 +9,13 @@ import lombok.*;
 @Getter
 public class Client extends Person {
 
-    private String adress;
+    private String address;
     private List<Account> accounts;
 
     @Override
     public String toString() {
         return "Client{" +
-                "adress='" + adress + '\'' +
+                "adress='" + address + '\'' +
                 ", accounts=" + accounts +
                 '}';
     }

@@ -5,6 +5,15 @@
     <title>EasyBank - Home</title>
 </head>
 <body>
-<h1 class="text-center text-4xl text-green-500 mt-20 font-bold">Easy Bank Web Application</h1>
+
+<style>
+    h1 {
+        margin-top: 20%;
+        text-align: center;
+    }
+</style>
+
+<h1>Landing page</h1>
+
 </body>
 </html>

@@ -16,91 +16,33 @@ public class ClientService {
 
     public  Client save(Client client) {
 
-        try {
-            Optional<Client> clientOptional = clientDAOImp.save(client);
-
-            if (clientOptional.isPresent()) {
-                return clientOptional.get();
-            } else {
-                throw new Exception("Error When Trying To Insert!");
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return clientDAOImp.save(client).orElse(null);
 
     }
 
     public  boolean delete(String code) {
 
-        try {
-            if(clientDAOImp.delete(code)) {
-                return true;
-            } else {
-                throw new Exception("Error When Trying To Delete!");
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return clientDAOImp.delete(code);
     }
 
     public  List<Client> findAll() {
 
-        try {
-            List<Client> clients = clientDAOImp.findAll().orElse(Collections.emptyList());
-
-            if (clients.isEmpty()) {
-                throw new Exception("No Clients Found!");
-            } else {
-                return clients;
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return clientDAOImp.findAll().orElse(Collections.emptyList());
     }
 
     public  Client findByCode(String code) {
 
-        try {
-
-            Optional<Client> clientOptional = clientDAOImp.findByCode(code);
-
-            if (clientOptional.isPresent()) {
-                return clientOptional.get();
-            } else {
-                throw new Exception("No Client With This Code Found!");
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return clientDAOImp.findByCode(code).orElse(null);
     }
 
-    public  Client findByAdress(String adress) {
+    public  Client findByAddress(String address) {
 
-        try {
-
-            Optional<Client> clientOptional = clientDAOImp.findByAdress(adress);
-
-            if (clientOptional.isPresent()) {
-                return clientOptional.get();
-            } else {
-                throw new Exception("No Client With This Adress Found!");
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return clientDAOImp.findByAdress(address).orElse(null);
     }
 
     public  boolean update(Client client) {
 
-        try {
-            if(clientDAOImp.update(client)) {
-                return true;
-            } else {
-                throw new Exception("Error When Trying To Update!");
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return clientDAOImp.update(client);
     }
 
 }

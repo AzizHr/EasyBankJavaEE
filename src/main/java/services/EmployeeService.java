@@ -48,19 +48,9 @@ public class EmployeeService {
     }
 
     public  Employee findByPhoneNumber(String phoneNumber) {
+        Optional<Employee> employeeOptional = employeeDAOImp.findByPhoneNumber(phoneNumber);
 
-        try {
-
-            Optional<Employee> employeeOptional = employeeDAOImp.findByPhoneNumber(phoneNumber);
-
-            if (employeeOptional.isPresent()) {
-                return employeeOptional.get();
-            } else {
-                throw new Exception("No Employee With This Adress Found!");
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return employeeOptional.orElse(null);
     }
 
     public  boolean update(Employee employee) {

@@ -12,4 +12,13 @@
         <servlet-name>EmployeeServlet</servlet-name>
         <url-pattern>/employees</url-pattern>
     </servlet-mapping>
+
+<!--    <servlet>-->
+<!--        <servlet-name>ClientServlet</servlet-name>-->
+<!--        <servlet-class>controllers.ClientServlet</servlet-class>-->
+<!--    </servlet>-->
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>ClientServlet</servlet-name>-->
+<!--        <url-pattern>/clients</url-pattern>-->
+<!--    </servlet-mapping>-->
 </web-app>

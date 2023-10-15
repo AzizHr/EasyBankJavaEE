@@ -106,36 +106,36 @@
     </style>
 
     <div class="container">
-        <h2>Creating a new employee account</h2>
-        <form action="${pageContext.request.contextPath}/employees?action=create" method="post">
+        <h2>Creating a new client account</h2>
+        <form action="${pageContext.request.contextPath}/clients?action=create" method="post">
             <div class="item item-1">
                 <label>Code</label>
-                <input type="text" name="employee_code" placeholder="Enter employee code" required/>
+                <input type="text" name="client_code" placeholder="Enter client code" required/>
             </div>
 
             <div class="item item-2">
                 <label>Firstname</label>
-                <input type="text" name="employee_firstname" placeholder="Enter employee firstname" required/>
+                <input type="text" name="client_firstname" placeholder="Enter client firstname" required/>
             </div>
 
             <div class="item item-3">
                 <label class="lastname">Lastname</label>
-                <input type="text" name="employee_lastname" placeholder="Enter employee lastname" required/>
+                <input type="text" name="client_lastname" placeholder="Enter client lastname" required/>
             </div>
 
             <div class="item item-4">
                 <label>Birthdate</label>
-                <input type="date" name="employee_birthdate" placeholder="Enter employee birthdate" required/>
+                <input type="date" name="client_birthdate" placeholder="Enter client birthdate" required/>
             </div>
 
             <div class="item item-5">
                 <label>Phone number</label>
-                <input type="text" name="employee_phone_number" placeholder="Enter employee phone number" required/>
+                <input type="text" name="client_phone_number" placeholder="Enter client phone number" required/>
             </div>
 
             <div class="item item-6">
-                <label>Email</label>
-                <input type="email" name="employee_email" placeholder="Enter Employee Email" required/>
+                <label>Address</label>
+                <input type="text" name="client_address" placeholder="Enter client address" required/>
             </div>
 
             <button type="submit">Submit</button>

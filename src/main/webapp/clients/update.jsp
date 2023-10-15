@@ -1,4 +1,4 @@
-<%@ page import="entities.Employee" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: Aziz
   Date: 09/10/2023
@@ -9,7 +9,6 @@
 <html>
 <head>
     <title>Update An Employee</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/employee.css">
 </head>
 <body>
 
@@ -34,10 +33,10 @@
     }
 </style>
 
-<% String no_employee_found = (String) request.getAttribute("no_employee_found"); %>
-<% if (no_employee_found != null && !no_employee_found.isEmpty()) { %>
+<% String no_client_found = (String) request.getAttribute("no_client_found"); %>
+<% if (no_client_found != null && !no_client_found.isEmpty()) { %>
 <div class="error">
-    <%= no_employee_found %>
+    <%= no_client_found %>
 </div>
 <% } %>
 
@@ -148,36 +147,36 @@
 </style>
 
 <div class="container">
-    <h2>Updating an employee account</h2>
-    <form action="${pageContext.request.contextPath}/employees?action=update" method="post">
+    <h2>Updating a client account</h2>
+    <form action="${pageContext.request.contextPath}/clients?action=update" method="post">
         <div class="item item-1">
             <label>Code</label>
-            <input type="text" name="employee_code" placeholder="Enter employee code" required value="${employee.code}" />
+            <input type="text" name="client_code" placeholder="Enter employee code" required value="${client.code}" />
         </div>
 
         <div class="item item-2">
             <label>Firstname</label>
-            <input type="text" name="employee_firstname" placeholder="Enter employee firstname" required value="${employee.firstName}"/>
+            <input type="text" name="client_firstname" placeholder="Enter client firstname" required value="${client.firstName}"/>
         </div>
 
         <div class="item item-3">
             <label class="lastname">Lastname</label>
-            <input type="text" name="employee_lastname" placeholder="Enter employee lastname" required value="${employee.lastName}"/>
+            <input type="text" name="client_lastname" placeholder="Enter client lastname" required value="${client.lastName}"/>
         </div>
 
         <div class="item item-4">
             <label>Birthdate</label>
-            <input type="date" name="employee_birthdate" placeholder="Enter employee birthdate" required value="${employee.birthDate}"/>
+            <input type="date" name="client_birthdate" placeholder="Enter client birthdate" required value="${client.birthDate}"/>
         </div>
 
         <div class="item item-5">
             <label>Phone number</label>
-            <input type="text" name="employee_phone_number" placeholder="Enter employee phone number" required value="${employee.phoneNumber}"/>
+            <input type="text" name="client_phone_number" placeholder="Enter client phone number" required value="${client.phoneNumber}"/>
         </div>
 
         <div class="item item-6">
-            <label>Email</label>
-            <input type="email" name="employee_email" placeholder="Enter Employee Email" required value="${employee.email}"/>
+            <label>Address</label>
+            <input type="text" name="client_address" placeholder="Enter client address" required value="${client.address}"/>
         </div>
 
         <button type="submit">Submit</button>

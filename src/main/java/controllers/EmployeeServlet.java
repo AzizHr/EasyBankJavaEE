@@ -41,6 +41,8 @@ public class EmployeeServlet extends HttpServlet {
             update(request, response);
         } else if ("delete".equals(action)) {
             delete(request, response);
+        } else if ("search".equals(action)) {
+            findByPhoneNumber(request, response);
         } else {
             out.print("Page Not Found!");
         }
@@ -66,7 +68,7 @@ public class EmployeeServlet extends HttpServlet {
             List<Employee> employees = employeeService.findAll();
 
             if (employees.isEmpty()) {
-                request.setAttribute("no_employees_found", "No Employees Found");
+                request.setAttribute("no_employees_found", "No employees found");
             } else {
                 request.setAttribute("employees", employees);
             }
@@ -80,13 +82,41 @@ public class EmployeeServlet extends HttpServlet {
 
     protected void findByCode(HttpServletRequest request, HttpServletResponse response) {
 
-        Employee employee = employeeService.findByCode(request.getParameter("code"));
-        if (employee != null) {
-            request.setAttribute("employee", employee);
-            showPage(request, response, "update");
+        String code = request.getParameter("code");
+
+        if(code != null && !code.isEmpty()) {
+            Employee employee = employeeService.findByCode(code);
+            if (employee != null) {
+                request.setAttribute("employee", employee);
+            } else {
+                out.println("No employee found with this code!");
+                request.setAttribute("no_employee_found", "No employee was found!");
+            }
         } else {
-            out.println("No employee found!");
+            request.setAttribute("code_is_empty", "Please provide a code!");
         }
+
+        showPage(request, response, "update");
+
+    }
+
+    protected void findByPhoneNumber(HttpServletRequest request, HttpServletResponse response) {
+
+        String phoneNumber = request.getParameter("phone_number");
+
+        if(phoneNumber != null && !phoneNumber.isEmpty()) {
+            Employee employee = employeeService.findByPhoneNumber(phoneNumber);
+            if (employee != null) {
+                request.setAttribute("employee", employee);
+            } else {
+                request.setAttribute("no_employee_found", "No employee was found!");
+            }
+        } else {
+            request.setAttribute("phone_number_is_empty", "Please provide a phone number!");
+        }
+
+        findAll(request, response);
+
     }
 
 
@@ -100,21 +130,16 @@ public class EmployeeServlet extends HttpServlet {
     }
 
     protected void save(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            Employee employee = new Employee();
-            employee.setCode(request.getParameter("employee_code"));
-            employee.setFirstName(request.getParameter("employee_firstname"));
-            employee.setLastName(request.getParameter("employee_lastname"));
-            employee.setBirthDate(LocalDate.parse(request.getParameter("employee_birthdate")));
-            employee.setPhoneNumber(request.getParameter("employee_phone_number"));
-            employee.setEmail(request.getParameter("employee_email"));
-            employeeService.save(employee);
-            request.setAttribute("new_employee_added_with_success", "Employee Added With Success");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("employees/create.jsp");
-            dispatcher.forward(request, response);
-        } catch (ServletException | IOException e) {
-            throw new RuntimeException(e);
-        }
+        Employee employee = new Employee();
+        employee.setCode(request.getParameter("employee_code"));
+        employee.setFirstName(request.getParameter("employee_firstname"));
+        employee.setLastName(request.getParameter("employee_lastname"));
+        employee.setBirthDate(LocalDate.parse(request.getParameter("employee_birthdate")));
+        employee.setPhoneNumber(request.getParameter("employee_phone_number"));
+        employee.setEmail(request.getParameter("employee_email"));
+        employeeService.save(employee);
+        request.setAttribute("new_employee_added_with_success", "Employee added with success!");
+        findAll(request, response);
     }
 
     public void update(HttpServletRequest request, HttpServletResponse response) {
@@ -129,11 +154,13 @@ public class EmployeeServlet extends HttpServlet {
             emp.setPhoneNumber(request.getParameter("employee_phone_number"));
             emp.setEmail(request.getParameter("employee_email"));
             employeeService.update(emp);
-            request.setAttribute("an_employee_updated_with_success", "Employee Updated With Success");
-            showPage(request, response, "update");
+            request.setAttribute("an_employee_updated_with_success", "Employee updated with success!");
+            findAll(request, response);
         } else {
-            out.println("Wait a minute");
+            request.setAttribute("code_required", "The employee code is required!");
+            showPage(request, response, "update");
         }
+
     }
 
     public void delete(HttpServletRequest request, HttpServletResponse response) {
@@ -141,12 +168,12 @@ public class EmployeeServlet extends HttpServlet {
         Employee employee = employeeService.findByCode(request.getParameter("code"));
         if (employee != null) {
             if(employeeService.delete(employee.getCode())) {
-                request.setAttribute("an_employee_deleted_with_success", "An Employee Deleted With Success");
+                request.setAttribute("an_employee_deleted_with_success", "Employee deleted with success!");
             } else {
-                request.setAttribute("wrong_code_error", "No Employee With This Code Found");
+                request.setAttribute("wrong_code_error", "No employee was found!");
             }
         } else {
-            request.setAttribute("wrong_code_error", "No Employee With This Code Found");
+            request.setAttribute("wrong_code_error", "No employee was found!");
         }
         findAll(request, response);
     }

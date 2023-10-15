@@ -1,4 +1,4 @@
-<%@ page import="entities.Employee" %><%--
+<%@ page import="entities.Client" %><%--
   Created by IntelliJ IDEA.
   User: Aziz
   Date: 09/10/2023
@@ -9,8 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>All Employees</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/employee.css">
+    <title>All Clients</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
@@ -149,14 +148,14 @@
             </ul>
         </nav>
     </div>
-    <% String added_with_success = (String) request.getAttribute("new_employee_added_with_success"); %>
+    <% String added_with_success = (String) request.getAttribute("new_client_added_with_success"); %>
     <% if (added_with_success != null && !added_with_success.isEmpty()) { %>
     <div class="success">
         <%= added_with_success %>
     </div>
     <% } %>
 
-    <% String deleted_with_success = (String) request.getAttribute("an_employee_deleted_with_success"); %>
+    <% String deleted_with_success = (String) request.getAttribute("a_client_deleted_with_success"); %>
     <% if (deleted_with_success != null && !deleted_with_success.isEmpty()) { %>
     <div class="success">
         <%= deleted_with_success %>
@@ -171,42 +170,42 @@
     <% } %>
 
 
-    <% String updated_with_success = (String) request.getAttribute("an_employee_updated_with_success"); %>
+    <% String updated_with_success = (String) request.getAttribute("a_client_updated_with_success"); %>
     <% if (updated_with_success != null && !updated_with_success.isEmpty()) { %>
     <div class="success">
         <%= updated_with_success %>
     </div>
     <% } %>
 
-    <% String no_employee_found = (String) request.getAttribute("no_employee_found"); %>
-    <% if (no_employee_found != null && !no_employee_found.isEmpty()) { %>
+    <% String no_client_found = (String) request.getAttribute("no_client_found"); %>
+    <% if (no_client_found != null && !no_client_found.isEmpty()) { %>
     <div class="not-found">
-        <%= no_employee_found %>
+        <%= no_client_found %>
     </div>
     <% } %>
 
-    <% String phone_number_is_empty = (String) request.getAttribute("phone_number_is_empty"); %>
-    <% if (phone_number_is_empty != null && !phone_number_is_empty.isEmpty()) { %>
+    <% String address_is_empty = (String) request.getAttribute("address_is_empty"); %>
+    <% if (address_is_empty != null && !address_is_empty.isEmpty()) { %>
     <div class="required">
-        <%= phone_number_is_empty %>
+        <%= address_is_empty %>
     </div>
     <% } %>
 
-    <form class="search-form" action="${pageContext.request.contextPath}/employees?action=search" method="post">
+    <form class="search-form" action="${pageContext.request.contextPath}/clients?action=search" method="post">
 
-        <input name="phone_number" placeholder="Enter a phone number to search..." />
+        <input name="address" placeholder="Enter an address to search..." />
         <button type="submit">Search</button>
 
     </form>
 
 
-    <% String no_employees_found = (String) request.getAttribute("no_employees_found"); %>
-    <% Employee employee = (Employee) request.getAttribute("employee"); %>
-    <% if (no_employees_found != null && !no_employees_found.isEmpty()) { %>
+    <% String no_clients_found = (String) request.getAttribute("no_clients_found"); %>
+    <% Client client = (Client) request.getAttribute("client"); %>
+    <% if (no_clients_found != null && !no_clients_found.isEmpty()) { %>
     <div>
-        <%= no_employees_found %>
+        <%= no_clients_found %>
     </div>
-    <% } else if(employee != null) { %>
+    <% } else if(client != null) { %>
         <div class="table-wrapper">
             <table class="employees-table">
                 <thead>
@@ -216,28 +215,28 @@
                     <th>Last Name</th>
                     <th>Birth Date</th>
                     <th>Phone Number</th>
-                    <th>Email</th>
+                    <th>Address</th>
                     <th>Delete</th>
                     <th>Update</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td>${employee.code}</td>
-                    <td>${employee.firstName}</td>
-                    <td>${employee.lastName}</td>
-                    <td>${employee.birthDate}</td>
-                    <td>${employee.phoneNumber}</td>
-                    <td>${employee.email}</td>
+                    <td>${client.code}</td>
+                    <td>${client.firstName}</td>
+                    <td>${client.lastName}</td>
+                    <td>${client.birthDate}</td>
+                    <td>${client.phoneNumber}</td>
+                    <td>${client.address}</td>
                     <td class="delete-form">
-                        <form action="${pageContext.request.contextPath}/employees?action=delete" method="post">
-                            <input name="code" value="${employee.code}" hidden>
+                        <form action="${pageContext.request.contextPath}/clients?action=delete" method="post">
+                            <input name="code" value="${client.code}" hidden>
                             <a><button type="submit"><i class="fa-solid fa-trash" style="color: red"></i></button></a>
                         </form>
                     </td>
                     <td>
-                        <c:url value='${pageContext.request.contextPath}/employees?action=edit&code=${employee.code}' var="editEmployeeURL" />
-                        <a href="${editEmployeeURL}"><i class="fa-solid fa-pen-to-square" style="color: #21de21"></i></a>
+                        <c:url value='${pageContext.request.contextPath}/clients?action=edit&code=${client.code}' var="editClientURL" />
+                        <a href="${editClientURL}"><i class="fa-solid fa-pen-to-square" style="color: #21de21"></i></a>
                     </td>
                 </tr>
                 <tbody>
@@ -253,29 +252,29 @@
                     <th>Last Name</th>
                     <th>Birth Date</th>
                     <th>Phone Number</th>
-                    <th>Email</th>
+                    <th>Address</th>
                     <th>Delete</th>
                     <th>Update</th>
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${employees}" var="employee">
+                <c:forEach items="${clients}" var="client">
                 <tr>
-                    <td>${employee.code}</td>
-                    <td>${employee.firstName}</td>
-                    <td>${employee.lastName}</td>
-                    <td>${employee.birthDate}</td>
-                    <td>${employee.phoneNumber}</td>
-                    <td>${employee.email}</td>
+                    <td>${client.code}</td>
+                    <td>${client.firstName}</td>
+                    <td>${client.lastName}</td>
+                    <td>${client.birthDate}</td>
+                    <td>${client.phoneNumber}</td>
+                    <td>${client.address}</td>
                     <td class="delete-form">
-                        <form class="delete-form-form" action="${pageContext.request.contextPath}/employees?action=delete" method="post">
-                            <input name="code" value="${employee.code}" hidden>
+                        <form class="delete-form-form" action="${pageContext.request.contextPath}/clients?action=delete" method="post">
+                            <input name="code" value="${client.code}" hidden>
                             <a><button type="submit"><i class="fa-solid fa-trash" style="color: red"></i></button></a>
                         </form>
                     </td>
                     <td>
-                        <c:url value='${pageContext.request.contextPath}/employees?action=edit&code=${employee.code}' var="editEmployeeURL" />
-                        <a href="${editEmployeeURL}"><i class="fa-solid fa-pen-to-square" style="color: #21de21"></i></a>
+                        <c:url value='${pageContext.request.contextPath}/clients?action=edit&code=${client.code}' var="editClientURL" />
+                        <a href="${editClientURL}"><i class="fa-solid fa-pen-to-square" style="color: #21de21"></i></a>
                     </td>
                 </tr>
                 </c:forEach>
