@@ -12,7 +12,6 @@ import services.ClientService;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
-import static java.lang.System.out;
 
 @WebServlet(name = "clientServlet", urlPatterns = {"/clients"})
 public class ClientServlet extends HttpServlet {
@@ -44,7 +43,7 @@ public class ClientServlet extends HttpServlet {
         } else if ("search".equals(action)) {
             findByAddress(request, response);
         } else {
-            out.print("Page Not Found!");
+            showNotFoundPage(request, response);
         }
     }
 
@@ -89,7 +88,6 @@ public class ClientServlet extends HttpServlet {
             if (client != null) {
                 request.setAttribute("client", client);
             } else {
-                out.println("No client found with this code!");
                 request.setAttribute("no_client_found", "No client was found!");
             }
         } else {
@@ -176,6 +174,16 @@ public class ClientServlet extends HttpServlet {
             request.setAttribute("wrong_code_error", "No client was found!");
         }
         findAll(request, response);
+    }
+
+    public void showNotFoundPage(HttpServletRequest request, HttpServletResponse response) {
+
+        try {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("404.jsp");
+            dispatcher.forward(request, response);
+        } catch (ServletException | IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 

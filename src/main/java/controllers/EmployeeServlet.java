@@ -44,7 +44,7 @@ public class EmployeeServlet extends HttpServlet {
         } else if ("search".equals(action)) {
             findByPhoneNumber(request, response);
         } else {
-            out.print("Page Not Found!");
+            showNotFoundPage(request, response);
         }
     }
 
@@ -176,5 +176,15 @@ public class EmployeeServlet extends HttpServlet {
             request.setAttribute("wrong_code_error", "No employee was found!");
         }
         findAll(request, response);
+    }
+
+    public void showNotFoundPage(HttpServletRequest request, HttpServletResponse response) {
+
+        try {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("404.jsp");
+            dispatcher.forward(request, response);
+        } catch (ServletException | IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
