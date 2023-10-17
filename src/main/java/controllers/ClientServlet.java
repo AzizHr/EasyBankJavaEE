@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
-@WebServlet(name = "clientServlet", urlPatterns = {"/clients"})
+@WebServlet(name = "ClientServlet", urlPatterns = {"/clients"})
 public class ClientServlet extends HttpServlet {
 
     private static final ClientDAOImp clientDAOImp = new ClientDAOImp();

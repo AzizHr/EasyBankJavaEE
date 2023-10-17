@@ -1,18 +1,5 @@
-<%@ page import="entities.Employee" %><%--
-  Created by IntelliJ IDEA.
-  User: Aziz
-  Date: 09/10/2023
-  Time: 13:40
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Update An Employee</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/employee.css">
-</head>
-<body>
-
+<jsp:include page="../helpers/header.jsp" />
+<jsp:include page="../helpers/navbar.jsp" />
 <style>
 
     .error {
@@ -24,14 +11,6 @@
         margin: 2% auto;
     }
 
-    .success {
-        color: #0F5132;
-        background-color: #D1E7DD;
-        padding: 16px 10px 16px 10px;
-        border-radius: 4px;
-        width: 50%;
-        margin: 1% auto;
-    }
 </style>
 
 <% String no_employee_found = (String) request.getAttribute("no_employee_found"); %>
@@ -180,9 +159,8 @@
             <input type="email" name="employee_email" placeholder="Enter Employee Email" required value="${employee.email}"/>
         </div>
 
-        <button type="submit">Submit</button>
+        <button class="bg-blue-500" type="submit">Submit</button>
     </form>
 </div>
 
-</body>
-</html>
+<jsp:include page="../helpers/footer.jsp" />

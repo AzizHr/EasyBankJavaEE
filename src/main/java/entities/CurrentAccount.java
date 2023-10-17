@@ -2,6 +2,9 @@ package entities;
 
 import lombok.*;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter

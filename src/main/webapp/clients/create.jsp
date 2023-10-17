@@ -1,17 +1,6 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Aziz
-  Date: 09/10/2023
-  Time: 13:39
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
-<html>
-<head>
-    <title>Add A New Employee</title>
-</head>
-<body>
+<%@ page import="entities.Client" %>
+<jsp:include page="../helpers/header.jsp" />
+<jsp:include page="../helpers/navbar.jsp" />
 
     <style>
 
@@ -138,8 +127,7 @@
                 <input type="text" name="client_address" placeholder="Enter client address" required/>
             </div>
 
-            <button type="submit">Submit</button>
+            <button class="bg-green-500" type="submit">Submit</button>
         </form>
     </div>
-</body>
-</html>
+<jsp:include page="../helpers/footer.jsp" />
