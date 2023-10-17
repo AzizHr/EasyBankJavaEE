@@ -5,6 +5,10 @@ import java.time.LocalDate;
 import java.util.List;
 import lombok.*;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 
 @NoArgsConstructor
 @AllArgsConstructor
