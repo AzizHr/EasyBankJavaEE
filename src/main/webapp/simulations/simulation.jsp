@@ -1,7 +1,6 @@
 <jsp:include page="../helpers/header.jsp" />
 <jsp:include page="../helpers/navbar.jsp" />
 
-<%--Simulation Interface--%>
 <div class="grid gap-4 w-1/4 mx-auto mt-10 border-2 rounded-sm border-gray-400 p-2">
     <span class="text-2xl text-center">My summary</span>
     <div class="grid gap-2">
@@ -32,7 +31,7 @@
         <div class="flex justify-between text-sm">
             <span>Duration</span>
             <span class="text-green-500 font-bold">28 months</span>
-        </div>git
+        </div>
     </div>
 </div>
 
