@@ -32,7 +32,7 @@
         <div class="flex justify-between text-sm">
             <span>Duration</span>
             <span class="text-green-500 font-bold">28 months</span>
-        </div>
+        </div>git
     </div>
 </div>
 
