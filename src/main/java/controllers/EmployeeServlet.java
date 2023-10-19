@@ -14,10 +14,10 @@ import java.time.LocalDate;
 import java.util.List;
 import static java.lang.System.out;
 
-@WebServlet(name = "employeeServlet", urlPatterns = {"/employees"})
+@WebServlet("/employees")
 public class EmployeeServlet extends HttpServlet {
 
-    private static final EmployeeDAOImp employeeDAOImp = new EmployeeDAOImp();
+   private static final EmployeeDAOImp employeeDAOImp = new EmployeeDAOImp();
     private static final EmployeeService employeeService = new EmployeeService(employeeDAOImp);
 
     @Override
@@ -66,7 +66,7 @@ public class EmployeeServlet extends HttpServlet {
     protected void findAll(HttpServletRequest request, HttpServletResponse response) {
         try {
             List<Employee> employees = employeeService.findAll();
-
+            System.out.println(employees);
             if (employees.isEmpty()) {
                 request.setAttribute("no_employees_found", "No employees found");
             } else {
