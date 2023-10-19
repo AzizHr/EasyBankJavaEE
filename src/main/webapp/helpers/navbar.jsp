@@ -36,7 +36,7 @@
                         <a href="${pageContext.request.contextPath}/clients" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Clients</a>
                         <a href="${pageContext.request.contextPath}/employees?action=view" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">New Employee</a>
                         <a href="${pageContext.request.contextPath}/clients?action=view" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">New Client</a>
-                        <a href="${pageContext.request.contextPath}/simulation" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Simulation</a>
+                        <a href="${pageContext.request.contextPath}/simulations?action=view" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Simulation</a>
                     </div>
                 </div>
             </div>

@@ -1,24 +1,31 @@
 package daoImplementaion;
 
-import controllers.HibernateUtil;
 import dao.IEmployeeDAO;
 import database.Database;
-import entities.Client;
 import entities.Employee;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.CriteriaUpdate;
+import javax.persistence.criteria.Root;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 public class EmployeeDAOImp implements IEmployeeDAO<Employee> {
 
     private static final Connection connection = Database.getInstance().getConnection();
-    private static final SessionFactory sessionFactory = HibernateUtil.grabSessionFactory();
+    private final SessionFactory sessionFactory;
+
+    public EmployeeDAOImp() {
+        Configuration configuration = new Configuration().configure();
+        sessionFactory = configuration.buildSessionFactory();
+    }
+
     /**
      * @param code
      * @return
@@ -121,31 +128,8 @@ public class EmployeeDAOImp implements IEmployeeDAO<Employee> {
      */
     @Override
     public Optional<List<Employee>> findAll() {
-
-//        List<Employee> employees = new ArrayList<>();
-//
-//        String sql = "SELECT * FROM employee";
-//
-//        try {
-//            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-//            ResultSet rs = preparedStatement.executeQuery();
-//            while (rs.next()) {
-//                Employee employee = new Employee();
-//                employee.setCode(rs.getString(1));
-//                employee.setFirstName(rs.getString(2));
-//                employee.setLastName(rs.getString(3));
-//                employee.setBirthDate(rs.getDate(4).toLocalDate());
-//                employee.setPhoneNumber(rs.getString(5));
-//                employee.setEmail(rs.getString(6));
-//                employees.add(employee);
-//            }
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//        return Optional.of(employees);
-
         try (Session session = sessionFactory.openSession()) {
-            String hql = "FROM Employee";
+            String hql = "FROM Employee e";
             Query<Employee> query = session.createQuery(hql, Employee.class);
             return Optional.of(query.list());
         }

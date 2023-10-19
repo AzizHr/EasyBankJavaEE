@@ -17,7 +17,7 @@ import java.util.List;
 
 import static java.lang.System.out;
 
-@WebServlet(name = "SimulationServlet", urlPatterns = {"/simulation"})
+@WebServlet(value = "/simulations")
 public class SimulationServlet extends HttpServlet {
 
     private static final DemandDAOImp demandDAOImp = new DemandDAOImp();

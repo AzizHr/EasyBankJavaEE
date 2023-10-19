@@ -1,11 +1,7 @@
 package entities;
 
 import lombok.*;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @NoArgsConstructor

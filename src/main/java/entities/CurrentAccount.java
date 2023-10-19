@@ -1,10 +1,7 @@
 package entities;
 
 import lombok.*;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import jakarta.persistence.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
