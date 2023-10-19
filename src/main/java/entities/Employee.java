@@ -1,10 +1,9 @@
 package entities;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.*;
-
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,16 +13,19 @@ import java.util.List;
 @Table(name = "employee")
 public class Employee extends Person {
 
+    @Column(name = "email")
     private String email;
-    private List<Operation> operations;
-    private List<MissionHistory> missionHistories;
+//    @Transient
+//    private List<Operation> operations;
+//    @Transient
+//    private List<MissionHistory> missionHistories;
 
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "email='" + email + '\'' +
-                ", operations=" + operations +
-                ", missionHistories=" + missionHistories +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Employee{" +
+//                "email='" + email + '\'' +
+//                ", operations=" + operations +
+//                ", missionHistories=" + missionHistories +
+//                '}';
+//    }
 }
