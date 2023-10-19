@@ -14,14 +14,16 @@ import java.time.LocalDate;
 import java.util.List;
 import static java.lang.System.out;
 
-<<<<<<< HEAD
-//@WebServlet()
-=======
-@WebServlet("/employees")
->>>>>>> 331fad275e043805739cd4ed09fdc9c3997552cb
+@WebServlet(value = "/employees")
 public class EmployeeServlet extends HttpServlet {
 
-   private static final EmployeeDAOImp employeeDAOImp = new EmployeeDAOImp();
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+    }
+
+    private static final EmployeeDAOImp employeeDAOImp = new EmployeeDAOImp();
     private static final EmployeeService employeeService = new EmployeeService(employeeDAOImp);
 
     @Override

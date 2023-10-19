@@ -1,23 +1,3 @@
-// let amount = document.getElementById("amount").value
-// let months = document.getElementById("months").value
-// let paidMonthly = document.getElementById("paidMonthly").value
-// // let monthlyIncome = GET_BY_ID("monthlyIncome")
-// // let email = GET_BY_ID("email")
-// // let phoneNumber = GET_BY_ID("phoneNumber")
-// // let project = GET_BY_ID("project")
-// // let job = GET_BY_ID("job")
-// // let calculate = GET_BY_ID("calculate")
-//
-//
-// // calculate.addEventListener("click", () => {
-// //
-// //     calculateMonthlyPayment(amount, months)
-// // })
-//
-// function calculateMonthlyPayment() {
-//     console.log((parseInt(amount) * (0.05 / 12)) / (1 - Math.pow((1 + (0.05 / 12)), -parseInt(months))))
-//     paidMonthly.value = (parseInt(amount) * (0.05 / 12)) / (1 - Math.pow((1 + (0.05 / 12)), -parseInt(months)))
-// }
 
 function calculateMonthlyPayment() {
     let amount = document.getElementById("amount").value;
@@ -30,7 +10,21 @@ function calculateMonthlyPayment() {
 
 }
 
-// Uncomment the event listener
-// let calculate = document.getElementById("calculate");
-// calculate.addEventListener("click", calculateMonthlyPayment);
+function showSimulation(){
+    document.getElementById("creditSimulation").classList.remove("hidden");
+    document.getElementById("registerApplication").classList.add("hidden");
+    document.getElementById("getIdentified").classList.add("hidden");
+}
+
+function showIdentificationForm(){
+    document.getElementById("creditSimulation").classList.add("hidden");
+    document.getElementById("registerApplication").classList.add("hidden");
+    document.getElementById("getIdentified").classList.remove("hidden");
+}
+
+function showRegisterApplication(){
+    document.getElementById("creditSimulation").classList.add("hidden");
+    document.getElementById("registerApplication").classList.remove("hidden");
+    document.getElementById("getIdentified").classList.add("hidden");
+}
 

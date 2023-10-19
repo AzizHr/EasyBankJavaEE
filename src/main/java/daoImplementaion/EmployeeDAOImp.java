@@ -6,15 +6,11 @@ import entities.Employee;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
-
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.CriteriaUpdate;
-import javax.persistence.criteria.Root;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import java.sql.*;
 import java.util.*;
-
 
 public class EmployeeDAOImp implements IEmployeeDAO<Employee> {
 
@@ -128,11 +124,19 @@ public class EmployeeDAOImp implements IEmployeeDAO<Employee> {
      */
     @Override
     public Optional<List<Employee>> findAll() {
-        try (Session session = sessionFactory.openSession()) {
-            String hql = "FROM Employee e";
-            Query<Employee> query = session.createQuery(hql, Employee.class);
-            return Optional.of(query.list());
+        List<Employee> employees = new ArrayList<>();
+        try (Session session = sessionFactory.openSession()){
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Employee> criteriaQuery = builder.createQuery(Employee.class);
+            Root<Employee> root = criteriaQuery.from(Employee.class);
+            criteriaQuery.select(root);
+            List<Employee> results = session.createQuery(criteriaQuery).getResultList();
+            employees.addAll(results);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
+
+        return Optional.of(employees);
     }
 
     /**
