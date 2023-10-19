@@ -14,7 +14,7 @@ import java.time.LocalDate;
 import java.util.List;
 import static java.lang.System.out;
 
-@WebServlet(name = "employeeServlet", urlPatterns = {"/employees"})
+//@WebServlet()
 public class EmployeeServlet extends HttpServlet {
 
     private static final EmployeeDAOImp employeeDAOImp = new EmployeeDAOImp();
