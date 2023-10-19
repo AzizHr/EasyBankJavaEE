@@ -17,7 +17,7 @@ public class AgencyDAOImp implements IAgencyDAO<Agency> {
 
     private static final Connection connection = Database.getInstance().getConnection();
     /**
-     * @param agency 
+     * @param agency
      * @return
      */
     @Override
@@ -28,7 +28,7 @@ public class AgencyDAOImp implements IAgencyDAO<Agency> {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, agency.getCode());
             preparedStatement.setString(2, agency.getName());
-            preparedStatement.setString(3, agency.getAdress());
+            preparedStatement.setString(3, agency.getAddress());
             preparedStatement.setString(4, agency.getPhoneNumber());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -57,7 +57,7 @@ public class AgencyDAOImp implements IAgencyDAO<Agency> {
     }
 
     /**
-     * @return 
+     * @return
      */
     @Override
     public Optional<List<Agency>> findAll() {
@@ -72,7 +72,7 @@ public class AgencyDAOImp implements IAgencyDAO<Agency> {
                 Agency agency = new Agency();
                 agency.setCode(rs.getString(1));
                 agency.setName(rs.getString(2));
-                agency.setAdress(rs.getString(3));
+                agency.setAddress(rs.getString(3));
                 agency.setPhoneNumber(rs.getString(4));
                 agencies.add(agency);
             }
@@ -83,7 +83,7 @@ public class AgencyDAOImp implements IAgencyDAO<Agency> {
     }
 
     /**
-     * @param agency 
+     * @param agency
      * @return
      */
     @Override
@@ -96,7 +96,7 @@ public class AgencyDAOImp implements IAgencyDAO<Agency> {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, agency.getName());
-            preparedStatement.setString(2, agency.getAdress());
+            preparedStatement.setString(2, agency.getAddress());
             preparedStatement.setObject(3, agency.getPhoneNumber());
             preparedStatement.setString(4, agency.getCode());
             updated = preparedStatement.executeUpdate() > 0;
@@ -107,7 +107,7 @@ public class AgencyDAOImp implements IAgencyDAO<Agency> {
     }
 
     /**
-     * @param code 
+     * @param code
      * @return
      */
     @Override
@@ -122,7 +122,7 @@ public class AgencyDAOImp implements IAgencyDAO<Agency> {
             if(rs.next()) {
                 agency.setCode(rs.getString(1));
                 agency.setName(rs.getString(2));
-                agency.setAdress(rs.getString(3));
+                agency.setAddress(rs.getString(3));
                 agency.setPhoneNumber(rs.getString(4));
             } else {
                 return Optional.empty();
@@ -134,7 +134,7 @@ public class AgencyDAOImp implements IAgencyDAO<Agency> {
     }
 
     /**
-     * @param adress 
+     * @param adress
      * @return
      */
     @Override
@@ -150,7 +150,7 @@ public class AgencyDAOImp implements IAgencyDAO<Agency> {
             if(rs.next()) {
                 agency.setCode(rs.getString(1));
                 agency.setName(rs.getString(2));
-                agency.setAdress(rs.getString(3));
+                agency.setAddress(rs.getString(3));
                 agency.setPhoneNumber(rs.getString(4));
             } else {
                 return Optional.empty();
@@ -178,7 +178,7 @@ public class AgencyDAOImp implements IAgencyDAO<Agency> {
             if(rs.next()) {
                 agency.setCode(rs.getString(1));
                 agency.setName(rs.getString(2));
-                agency.setAdress(rs.getString(3));
+                agency.setAddress(rs.getString(3));
                 agency.setPhoneNumber(rs.getString(4));
             } else {
                 return Optional.empty();

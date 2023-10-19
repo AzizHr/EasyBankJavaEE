@@ -1,12 +1,17 @@
 package entities;
 
 import lombok.*;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
+@Entity
+@Table(name = "employee")
 public class Employee extends Person {
 
     private String email;

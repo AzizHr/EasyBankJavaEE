@@ -2,12 +2,19 @@ package entities;
 
 import lombok.*;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
+@Entity
+@Table(name = "saving_account")
 public class SavingAccount extends Account {
 
+    @Column(name = "interest")
     private double interest;
 
     @Override

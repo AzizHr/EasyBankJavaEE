@@ -19,7 +19,7 @@ public class SavingAccountDAOImp implements ISavingAccountDAO<SavingAccount> {
     private static final ClientDAOImp clientDAOImp = new ClientDAOImp();
     private static final EmployeeDAOImp employeeDAOImp = new EmployeeDAOImp();
     /**
-     * @param savingAccount 
+     * @param savingAccount
      * @return
      */
     @Override
@@ -31,7 +31,7 @@ public class SavingAccountDAOImp implements ISavingAccountDAO<SavingAccount> {
             preparedStatement.setString(1, savingAccount.getNumber());
             preparedStatement.setDouble(2, savingAccount.getBalance());
             preparedStatement.setObject(3, savingAccount.getCreatedAt());
-            preparedStatement.setObject(4, accountStatus.Active, Types.OTHER);
+            preparedStatement.setObject(4, accountStatus.ACTIVE, Types.OTHER);
             preparedStatement.setObject(5, savingAccount.getInterest());
             preparedStatement.setString(6, savingAccount.getAgency().getCode());
             preparedStatement.setString(7, savingAccount.getClient().getCode());
@@ -74,7 +74,7 @@ public class SavingAccountDAOImp implements ISavingAccountDAO<SavingAccount> {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setDouble(1, savingAccount.getBalance());
-            preparedStatement.setObject(2, savingAccount.getStatus());
+            preparedStatement.setObject(2, savingAccount.getAccountStatus());
             preparedStatement.setObject(3, savingAccount.getInterest());
             preparedStatement.setString(4, savingAccount.getAgency().getCode());
             preparedStatement.setString(5, savingAccount.getNumber());
@@ -86,7 +86,7 @@ public class SavingAccountDAOImp implements ISavingAccountDAO<SavingAccount> {
     }
 
     /**
-     * @param status 
+     * @param status
      * @return
      */
     @Override
@@ -106,7 +106,7 @@ public class SavingAccountDAOImp implements ISavingAccountDAO<SavingAccount> {
     }
 
     /**
-     * @return 
+     * @return
      */
     @Override
     public Optional<List<SavingAccount>> findAll() {
@@ -122,7 +122,7 @@ public class SavingAccountDAOImp implements ISavingAccountDAO<SavingAccount> {
                 savingAccount.setNumber(rs.getString(1));
                 savingAccount.setBalance(rs.getDouble(2));
                 savingAccount.setCreatedAt(rs.getDate(3).toLocalDate());
-                savingAccount.setStatus(accountStatus.valueOf(rs.getString(4)));
+                savingAccount.setAccountStatus(accountStatus.valueOf(rs.getString(4)));
                 savingAccount.setInterest(rs.getDouble(5));
                 savingAccount.setAgency(agencyDAOImp.findByCode(rs.getString(6)).get());
                 savingAccount.setClient(clientDAOImp.findByCode(rs.getString(7)).get());
@@ -155,7 +155,7 @@ public class SavingAccountDAOImp implements ISavingAccountDAO<SavingAccount> {
                 savingAccount.setNumber(rs.getString(1));
                 savingAccount.setBalance(rs.getDouble(2));
                 savingAccount.setCreatedAt(rs.getDate(3).toLocalDate());
-                savingAccount.setStatus(accountStatus.valueOf(rs.getString(4)));
+                savingAccount.setAccountStatus(accountStatus.valueOf(rs.getString(4)));
                 savingAccount.setInterest(rs.getDouble(5));
                 savingAccount.setAgency(agencyDAOImp.findByCode(rs.getString(6)).get());
                 savingAccounts.add(savingAccount);
@@ -167,7 +167,7 @@ public class SavingAccountDAOImp implements ISavingAccountDAO<SavingAccount> {
     }
 
     /**
-     * @param number 
+     * @param number
      * @return
      */
     @Override
@@ -184,7 +184,7 @@ public class SavingAccountDAOImp implements ISavingAccountDAO<SavingAccount> {
                 savingAccount.setNumber(rs.getString(1));
                 savingAccount.setBalance(rs.getDouble(2));
                 savingAccount.setCreatedAt(rs.getDate(3).toLocalDate());
-                savingAccount.setStatus(accountStatus.valueOf(rs.getString(4)));
+                savingAccount.setAccountStatus(accountStatus.valueOf(rs.getString(4)));
                 savingAccount.setInterest(rs.getDouble(5));
                 savingAccount.setAgency(agencyDAOImp.findByCode(rs.getString(6)).get());
             }
@@ -195,7 +195,7 @@ public class SavingAccountDAOImp implements ISavingAccountDAO<SavingAccount> {
     }
 
     /**
-     * @param number 
+     * @param number
      * @return
      */
     @Override
@@ -212,7 +212,7 @@ public class SavingAccountDAOImp implements ISavingAccountDAO<SavingAccount> {
                 savingAccount.setNumber(rs.getString(1));
                 savingAccount.setBalance(rs.getDouble(2));
                 savingAccount.setCreatedAt(rs.getDate(3).toLocalDate());
-                savingAccount.setStatus(accountStatus.valueOf(rs.getString(4)));
+                savingAccount.setAccountStatus(accountStatus.valueOf(rs.getString(4)));
                 savingAccount.setInterest(rs.getDouble(5));
                 savingAccount.setAgency(agencyDAOImp.findByCode(rs.getString(6)).get());
             }
@@ -223,7 +223,7 @@ public class SavingAccountDAOImp implements ISavingAccountDAO<SavingAccount> {
     }
 
     /**
-     * @param balance 
+     * @param balance
      * @param number
      * @return
      */
@@ -244,7 +244,7 @@ public class SavingAccountDAOImp implements ISavingAccountDAO<SavingAccount> {
     }
 
     /**
-     * @param balance 
+     * @param balance
      * @param number
      * @return
      */
