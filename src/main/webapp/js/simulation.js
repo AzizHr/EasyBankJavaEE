@@ -10,3 +10,21 @@ function calculateMonthlyPayment() {
 
 }
 
+function showSimulation(){
+    document.getElementById("creditSimulation").classList.remove("hidden");
+    document.getElementById("registerApplication").classList.add("hidden");
+    document.getElementById("getIdentified").classList.add("hidden");
+}
+
+function showIdentificationForm(){
+    document.getElementById("creditSimulation").classList.add("hidden");
+    document.getElementById("registerApplication").classList.add("hidden");
+    document.getElementById("getIdentified").classList.remove("hidden");
+}
+
+function showRegisterApplication(){
+    document.getElementById("creditSimulation").classList.add("hidden");
+    document.getElementById("registerApplication").classList.remove("hidden");
+    document.getElementById("getIdentified").classList.add("hidden");
+}
+
