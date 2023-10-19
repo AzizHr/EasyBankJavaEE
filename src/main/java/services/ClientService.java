@@ -4,7 +4,6 @@ import daoImplementaion.ClientDAOImp;
 import entities.Client;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 public class ClientService {
 

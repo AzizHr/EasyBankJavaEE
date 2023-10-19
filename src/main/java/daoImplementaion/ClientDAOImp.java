@@ -18,7 +18,7 @@ public class ClientDAOImp implements IClientDAO<Client> {
     private static final Connection connection = Database.getInstance().getConnection();
 
     /**
-     * @param code 
+     * @param code
      * @return
      */
     @Override
@@ -47,7 +47,7 @@ public class ClientDAOImp implements IClientDAO<Client> {
     }
 
     /**
-     * @param client 
+     * @param client
      * @return
      */
     @Override
@@ -90,7 +90,7 @@ public class ClientDAOImp implements IClientDAO<Client> {
     }
 
     /**
-     * @param client 
+     * @param client
      * @return
      */
     @Override
@@ -115,7 +115,7 @@ public class ClientDAOImp implements IClientDAO<Client> {
     }
 
     /**
-     * @return 
+     * @return
      */
     @Override
     public Optional<List<Client>> findAll() {
@@ -144,7 +144,7 @@ public class ClientDAOImp implements IClientDAO<Client> {
     }
 
     /**
-     * @param adress 
+     * @param adress
      * @return
      */
     @Override

@@ -11,7 +11,7 @@ import java.util.Optional;
 public class AccountDAOImp implements IAccountDAO<Account> {
 
     /**
-     * @param account 
+     * @param account
      * @return
      */
     @Override
@@ -20,7 +20,7 @@ public class AccountDAOImp implements IAccountDAO<Account> {
     }
 
     /**
-     * @param number 
+     * @param number
      * @return
      */
     @Override
@@ -29,7 +29,7 @@ public class AccountDAOImp implements IAccountDAO<Account> {
     }
 
     /**
-     * @param account 
+     * @param account
      * @return
      */
     @Override
@@ -38,7 +38,7 @@ public class AccountDAOImp implements IAccountDAO<Account> {
     }
 
     /**
-     * @param status 
+     * @param status
      * @return
      */
     @Override
@@ -47,7 +47,7 @@ public class AccountDAOImp implements IAccountDAO<Account> {
     }
 
     /**
-     * @return 
+     * @return
      */
     @Override
     public Optional<List<Account>> findAll() {
@@ -55,7 +55,7 @@ public class AccountDAOImp implements IAccountDAO<Account> {
     }
 
     /**
-     * @param code 
+     * @param code
      * @return
      */
     @Override
@@ -64,7 +64,7 @@ public class AccountDAOImp implements IAccountDAO<Account> {
     }
 
     /**
-     * @param number 
+     * @param number
      * @return
      */
     @Override
@@ -73,7 +73,7 @@ public class AccountDAOImp implements IAccountDAO<Account> {
     }
 
     /**
-     * @param number 
+     * @param number
      * @return
      */
     @Override
@@ -82,7 +82,7 @@ public class AccountDAOImp implements IAccountDAO<Account> {
     }
 
     /**
-     * @param balance 
+     * @param balance
      * @param number
      * @return
      */
@@ -92,7 +92,7 @@ public class AccountDAOImp implements IAccountDAO<Account> {
     }
 
     /**
-     * @param balance 
+     * @param balance
      * @param number
      * @return
      */

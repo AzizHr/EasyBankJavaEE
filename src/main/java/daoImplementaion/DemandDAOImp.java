@@ -9,6 +9,7 @@ import enums.demandStatus;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +28,7 @@ public class DemandDAOImp implements IDemandDAO<Simulation> {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, simulation.getNumber());
-            preparedStatement.setObject(2, simulation.getDate());
+            preparedStatement.setObject(2, simulation.getCreateAt());
             preparedStatement.setObject(3, simulation.getStatus(), Types.OTHER);
             preparedStatement.setDouble(4, simulation.getPrice());
             preparedStatement.setInt(5, simulation.getDuration());
@@ -70,7 +71,7 @@ public class DemandDAOImp implements IDemandDAO<Simulation> {
             ResultSet rs = preparedStatement.executeQuery();
             if(rs.next()) {
                 demand.setNumber(rs.getString(1));
-                demand.setDate(rs.getDate(2).toLocalDate());
+                demand.setCreateAt(rs.getDate(2).toLocalDate());
                 demand.setStatus(demandStatus.valueOf(rs.getString(3)));
                 demand.setPrice(rs.getDouble(4));
                 demand.setDuration(rs.getInt(5));

@@ -17,7 +17,7 @@ public class OperationDAOImp implements IOperationDAO<Operation> {
     private static final SavingAccountDAOImp savingAccountDAOImp = new SavingAccountDAOImp();
 
     /**
-     * @param operation 
+     * @param operation
      * @return
      */
     @Override
@@ -40,7 +40,7 @@ public class OperationDAOImp implements IOperationDAO<Operation> {
     }
 
     /**
-     * @param operation 
+     * @param operation
      * @return
      */
     @Override
@@ -82,7 +82,7 @@ public class OperationDAOImp implements IOperationDAO<Operation> {
     }
 
     /**
-     * @param number 
+     * @param number
      * @return
      */
     @Override

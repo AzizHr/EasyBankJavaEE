@@ -5,24 +5,32 @@ import java.time.LocalDate;
 import java.util.List;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
+@MappedSuperclass
 public abstract class Account {
 
+    @Id
+    @Column(name = "number")
     private String number;
+    @Column(name = "balance")
     private double balance;
+    @Column(name = "created_at")
     private LocalDate createdAt;
-    private accountStatus status;
+    @Column(name = "account_status")
+    private accountStatus accountStatus;
+    @Transient
     private Agency agency;
+    @Transient
     private Client client;
+    @Transient
     private Employee employee;
+    @Transient
     private List<Operation> operations;
 
 }

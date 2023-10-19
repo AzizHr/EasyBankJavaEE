@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public class PersonDAOImp implements IPersonDAO<Person> {
     /**
-     * @param person 
+     * @param person
      * @return
      */
     @Override
@@ -25,7 +25,7 @@ public class PersonDAOImp implements IPersonDAO<Person> {
     }
 
     /**
-     * @param person 
+     * @param person
      * @return
      */
     @Override
@@ -34,7 +34,7 @@ public class PersonDAOImp implements IPersonDAO<Person> {
     }
 
     /**
-     * @return 
+     * @return
      */
     @Override
     public Optional<List<Person>> findAll() {
@@ -42,7 +42,7 @@ public class PersonDAOImp implements IPersonDAO<Person> {
     }
 
     /**
-     * @param code 
+     * @param code
      * @return
      */
     @Override

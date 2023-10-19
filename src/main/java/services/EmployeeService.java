@@ -2,13 +2,14 @@ package services;
 
 import daoImplementaion.EmployeeDAOImp;
 import entities.Employee;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 public class EmployeeService {
 
-    private  EmployeeDAOImp employeeDAOImp;
+    private static EmployeeDAOImp employeeDAOImp;
 
     public EmployeeService(EmployeeDAOImp instance) {
         employeeDAOImp = instance;
@@ -38,6 +39,7 @@ public class EmployeeService {
     public List<Employee> findAll() {
 
         return employeeDAOImp.findAll().orElse(Collections.emptyList());
+
     }
 
     public  Employee findByCode(String code) {
