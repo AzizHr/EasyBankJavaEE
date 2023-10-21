@@ -2,7 +2,7 @@ package entities;
 
 import java.util.List;
 import lombok.*;
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
