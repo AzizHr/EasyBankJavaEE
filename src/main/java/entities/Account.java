@@ -4,7 +4,7 @@ import enums.accountStatus;
 import java.time.LocalDate;
 import java.util.List;
 import lombok.*;
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 
 @NoArgsConstructor

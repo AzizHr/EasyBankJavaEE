@@ -2,7 +2,7 @@ package entities;
 
 import enums.demandStatus;
 import lombok.*;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @NoArgsConstructor
@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @Setter
 @Getter
 @MappedSuperclass
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Simulation {
 
     @Id

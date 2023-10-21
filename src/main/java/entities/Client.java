@@ -2,8 +2,7 @@ package entities;
 
 import java.util.List;
 import lombok.*;
-import jakarta.persistence.*;
-
+import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
@@ -12,6 +11,9 @@ import jakarta.persistence.*;
 @Table(name = "client")
 public class Client extends Person {
 
+    @Id
+    @Column(name = "code")
+    private String code;
     @Column(name = "address")
     private String address;
     @Transient
