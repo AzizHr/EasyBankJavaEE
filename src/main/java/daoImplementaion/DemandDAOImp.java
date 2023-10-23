@@ -1,11 +1,14 @@
 package daoImplementaion;
 
+import controllers.HibernateHelper;
 import dao.IDemandDAO;
 import database.Database;
 import entities.Demand;
 import entities.Employee;
 import entities.Simulation;
 import enums.demandStatus;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -21,22 +24,35 @@ public class DemandDAOImp implements IDemandDAO<Simulation> {
      * @param simulation 
      * @return
      */
+//    @Override
+//    public Optional<Simulation> save(Simulation simulation) {
+//        String sql = "INSERT INTO demand (number, date, status, price, duration) VALUES (?, ?, ?, ?, ?)";
+//
+//        try {
+//            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+//            preparedStatement.setString(1, simulation.getNumber());
+//            preparedStatement.setObject(2, simulation.getCreateAt());
+//            preparedStatement.setObject(3, simulation.getStatus(), Types.OTHER);
+//            preparedStatement.setDouble(4, simulation.getPrice());
+//            preparedStatement.setInt(5, simulation.getDuration());
+//            preparedStatement.executeUpdate();
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//        return Optional.of(simulation);
+//    }
+
     @Override
     public Optional<Simulation> save(Simulation simulation) {
-        String sql = "INSERT INTO demand (number, date, status, price, duration) VALUES (?, ?, ?, ?, ?)";
-
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, simulation.getNumber());
-            preparedStatement.setObject(2, simulation.getCreateAt());
-            preparedStatement.setObject(3, simulation.getStatus(), Types.OTHER);
-            preparedStatement.setDouble(4, simulation.getPrice());
-            preparedStatement.setInt(5, simulation.getDuration());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        try (Session session = HibernateHelper.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.save(simulation);
+            transaction.commit();
+            return Optional.of(simulation);
+        } catch (Exception e) {
+            System.out.println("Error when trying to save: " + e.getMessage());
+            return Optional.empty();
         }
-        return Optional.of(simulation);
     }
 
     /**

@@ -54,7 +54,7 @@ public class ClientDAOImp implements IClientDAO<Client> {
 //    @Override
 //    public Optional<Client> save(Client client) {
 //
-//        String sql = "INSERT INTO client (code, first_name, last_name, birth_date, phone_number, address) VALUES (?, ?, ?, ?, ?, ?)";
+//        String sql = "INSERT INTO client (code, first_name, last_name, birth_date, phone_number, address, employee_code) VALUES (?, ?, ?, ?, ?, ?, ?)";
 //
 //        try {
 //            PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -64,12 +64,14 @@ public class ClientDAOImp implements IClientDAO<Client> {
 //            preparedStatement.setObject(4, client.getBirthDate());
 //            preparedStatement.setString(5, client.getPhoneNumber());
 //            preparedStatement.setString(6, client.getAddress());
+//            preparedStatement.setString(7, client.getEmployee().getCode());
 //            preparedStatement.executeUpdate();
 //        } catch (SQLException e) {
 //            throw new RuntimeException(e);
 //        }
 //        return Optional.of(client);
 //    }
+
     @Override
     public Optional<Client> save(Client client) {
         try (Session session = HibernateHelper.getSessionFactory().openSession()) {
@@ -174,18 +176,15 @@ public class ClientDAOImp implements IClientDAO<Client> {
 
     @Override
     public Optional<List<Client>> findAll() {
-        try (Session session = HibernateHelper.getSessionFactory().openSession()) {
-            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-            CriteriaQuery<Client> query = criteriaBuilder.createQuery(Client.class);
-            Root<Client> root = query.from(Client.class);
-            query.select(root);
 
-            List<Client> clients = session.createQuery(query).list();
-            return Optional.of(clients);
+        List<Client> clients = new ArrayList<>();
+        try (Session session = HibernateHelper.getSessionFactory().openSession()){
+            clients = session.createQuery("FROM Client", Client.class).list();
         } catch (Exception e) {
-            System.out.println("Error when trying to find all clients: " + e.getMessage());
-            return Optional.empty();
+            System.out.println("error message: " + e.getMessage());
+            e.printStackTrace();
         }
+        return Optional.of(clients);
     }
 
 
@@ -193,50 +192,50 @@ public class ClientDAOImp implements IClientDAO<Client> {
      * @param address
      * @return
      */
-//    @Override
-//    public Optional<Client> findByAdress(String adress) {
-//        Client client = new Client();
-//        String sql = "SELECT * FROM client WHERE address = ?";
-//
-//        try {
-//            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-//            preparedStatement.setString(1, adress);
-//            ResultSet rs = preparedStatement.executeQuery();
-//            if(rs.next()) {
-//                client.setCode(rs.getString(1));
-//                client.setFirstName(rs.getString(2));
-//                client.setLastName(rs.getString(3));
-//                client.setBirthDate(rs.getDate(4).toLocalDate());
-//                client.setPhoneNumber(rs.getString(5));
-//                client.setAddress(rs.getString(6));
-//            } else {
-//                return Optional.empty();
-//            }
-//        } catch (SQLException e) {
-//            System.out.println("Error when trying to select");
-//        }
-//        return Optional.of(client);
-//    }
-
     @Override
     public Optional<Client> findByAdress(String address) {
-        try (Session session = HibernateHelper.getSessionFactory().openSession()) {
-            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-            CriteriaQuery<Client> query = criteriaBuilder.createQuery(Client.class);
-            Root<Client> root = query.from(Client.class);
-            query.select(root).where(criteriaBuilder.equal(root.get("address"), address));
+        Client client = new Client();
+        String sql = "SELECT * FROM client WHERE address = ?";
 
-            Client client = session.createQuery(query).uniqueResult();
-
-            if (client != null) {
-                return Optional.of(client);
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, address);
+            ResultSet rs = preparedStatement.executeQuery();
+            if(rs.next()) {
+                client.setCode(rs.getString(1));
+                client.setFirstName(rs.getString(2));
+                client.setLastName(rs.getString(3));
+                client.setBirthDate(rs.getDate(4).toLocalDate());
+                client.setPhoneNumber(rs.getString(5));
+                client.setAddress(rs.getString(6));
             } else {
                 return Optional.empty();
             }
-        } catch (Exception e) {
-            System.out.println("Error when trying to find by address: " + e.getMessage());
-            return Optional.empty();
+        } catch (SQLException e) {
+            System.out.println("Error when trying to select");
         }
+        return Optional.of(client);
     }
+
+//    @Override
+//    public Optional<Client> findByAdress(String address) {
+//        try (Session session = HibernateHelper.getSessionFactory().openSession()) {
+//            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+//            CriteriaQuery<Client> query = criteriaBuilder.createQuery(Client.class);
+//            Root<Client> root = query.from(Client.class);
+//            query.select(root).where(criteriaBuilder.equal(root.get("address"), address));
+//
+//            Client client = session.createQuery(query).uniqueResult();
+//
+//            if (client != null) {
+//                return Optional.of(client);
+//            } else {
+//                return Optional.empty();
+//            }
+//        } catch (Exception e) {
+//            System.out.println("Error when trying to find by address: " + e.getMessage());
+//            return Optional.empty();
+//        }
+//    }
 
 }

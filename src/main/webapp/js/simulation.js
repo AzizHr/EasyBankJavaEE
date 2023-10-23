@@ -1,12 +1,22 @@
 
-function calculateMonthlyPayment() {
+function calculateMonthlyPayment(event) {
+    event.preventDefault()
     let amount = document.getElementById("amount").value;
     let months = document.getElementById("months").value;
     let paidMonthly = document.getElementById("paidMonthly");
+    let finalProject = document.getElementById("finalProject")
+    let finalEmail = document.getElementById("finalEmail")
+    let finalPhoneNumber = document.getElementById("finalPhoneNumber")
+    let finalJob = document.getElementById("finalJob")
+    let finalPrice = document.getElementById("finalPrice")
+    let finalDuration = document.getElementById("finalDuration")
+
+    finalPrice.innerText = amount.concat(' DH')
+    finalDuration.innerText = months.concat(' months')
 
     console.log((parseFloat(amount) * (0.05 / 12)) / (1 - Math.pow((1 + (0.05 / 12)), -parseInt(months))))
     let res = (parseFloat(amount) * (0.05 / 12)) / (1 - Math.pow((1 + (0.05 / 12)), -parseInt(months)))
-    paidMonthly.value = res.toFixed(2)
+    paidMonthly.value = parseInt(res.toFixed(0))
 
 }
 
