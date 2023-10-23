@@ -19,7 +19,7 @@ import java.util.Optional;
 @ApplicationScoped
 public class EmployeeDAOImp implements IEmployeeDAO<Employee> {
     private static final Connection connection = Database.getInstance().getConnection();
-//    private static final SessionFactory sessionFactory = HibernateHelper.getSessionFactory();
+    private static final SessionFactory sessionFactory = HibernateHelper.getSessionFactory();
 
     @Override
     public Optional<Employee> findByCode(String code) {

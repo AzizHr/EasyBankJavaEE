@@ -14,9 +14,9 @@ public class Database {
 
     private Database() {
         try {
-            String url = "jdbc:postgresql://localhost:5432/easy_bank";
+            String url = "jdbc:postgresql://localhost:5432/easy_bank1";
             String username = "postgres";
-            String password = "aziz";
+            String password = "1234";
             Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(url, username, password);
 //            System.out.println("success");
