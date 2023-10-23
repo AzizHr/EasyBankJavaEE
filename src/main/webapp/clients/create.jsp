@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="entities.Client" %>
 <jsp:include page="../helpers/header.jsp" />
 <jsp:include page="../helpers/navbar.jsp" />
@@ -55,7 +56,13 @@
             grid-column-end: 3;
         }
 
-        form .item input {
+        form .item-7 {
+            grid-column-start: 1;
+            grid-column-end: 3;
+        }
+
+        form .item input,
+        form .item select {
             padding: 12px 6px 12px 6px;
             background-color: #f1f1f1;
             font-size: small;
@@ -125,6 +132,14 @@
             <div class="item item-6">
                 <label>Address</label>
                 <input type="text" name="client_address" placeholder="Enter client address" required/>
+            </div>
+            <div class="item item-7">
+                <label>Employee</label>
+                <select name="employee_code">
+                    <c:forEach items="${employees}" var="employee">
+                        <option value="${employee.code}">${employee.firstName} ${employee.lastName}</option>
+                    </c:forEach>
+                </select>
             </div>
 
             <button class="bg-green-500" type="submit">Submit</button>

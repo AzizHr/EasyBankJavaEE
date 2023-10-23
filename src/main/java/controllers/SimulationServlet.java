@@ -27,7 +27,6 @@ public class SimulationServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 
         String action = request.getParameter("action");
-        response.setContentType("text/html");
 
         if(action == null) {
             findAll(request, response);
@@ -73,10 +72,25 @@ public class SimulationServlet extends HttpServlet {
         List<Simulation> demands = demandService.findAll();
 
         if (demands.isEmpty()) {
+            out.println("No demands found!");
             request.setAttribute("no_demands_found", "No demands found");
         } else {
             request.setAttribute("demands", demands);
         }
         Page.show(request, response, "simulations/index.jsp");
+    }
+
+    private void save(HttpServletRequest request, HttpServletResponse response) {
+
+        request.getParameter("number");
+        request.getParameter("created_at");
+        request.getParameter("status");
+        request.getParameter("price");
+        request.getParameter("duration");
+        request.getParameter("paid_monthly");
+        request.getParameter("remarks");
+        request.getParameter("client_code");
+        request.getParameter("agency_code");
+
     }
 }
