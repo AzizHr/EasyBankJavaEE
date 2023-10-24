@@ -39,19 +39,14 @@ public class EmployeeDAOImp implements IEmployeeDAO<Employee> {
 
     @Override
     public Optional<Employee> save(Employee employee) {
-        String sql = "INSERT INTO employee (code, first_name, last_name, birth_date, phone_number, email) VALUES (?, ?, ?, ?, ?, ?)";
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, employee.getCode());
-            preparedStatement.setString(2, employee.getFirstName());
-            preparedStatement.setString(3, employee.getLastName());
-            preparedStatement.setObject(4, employee.getBirthDate());
-            preparedStatement.setString(5, employee.getPhoneNumber());
-            preparedStatement.setString(6, employee.getEmail());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        try (Session session = HibernateHelper.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.save(employee);
+            transaction.commit();
+            return Optional.of(employee);
+        } catch (Exception e) {
+            System.out.println("Error when trying to insert: " + e.getMessage());
         }
         return Optional.of(employee);
     }
@@ -59,35 +54,47 @@ public class EmployeeDAOImp implements IEmployeeDAO<Employee> {
     @Override
     public boolean delete(String code) {
         boolean deleted = false;
-        String sql = "DELETE FROM employee WHERE code = ?";
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, code);
-            deleted = preparedStatement.executeUpdate() > 0;
-        } catch (SQLException e) {
-            System.out.println("Error when trying to delete");
+        try (Session session = HibernateHelper.getSessionFactory().openSession()) {
+
+            Transaction transaction = session.beginTransaction();
+            Employee employee = session.createQuery("FROM Employee WHERE code = :code", Employee.class)
+                    .setParameter("code", code)
+                    .uniqueResult();
+
+            if (employee != null) {
+                session.delete(employee);
+                deleted = true;
+            }
+            transaction.commit();
+        } catch (Exception e) {
+            System.out.println("Error when trying to delete: " + e.getMessage());
         }
         return deleted;
     }
 
     @Override
     public boolean update(Employee employee) {
+
         boolean updated = false;
 
-        String sql = "UPDATE employee SET first_name = ?, last_name = ?, birth_date = ?, phone_number = ?, email = ? WHERE code = ?";
+        try (Session session = HibernateHelper.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, employee.getFirstName());
-            preparedStatement.setString(2, employee.getLastName());
-            preparedStatement.setObject(3, employee.getBirthDate());
-            preparedStatement.setString(4, employee.getPhoneNumber());
-            preparedStatement.setString(5, employee.getEmail());
-            preparedStatement.setString(6, employee.getCode());
-            updated = preparedStatement.executeUpdate() > 0;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            Employee existingEmployee = session.get(Employee.class, employee.getCode());
+
+            if (existingEmployee != null) {
+                existingEmployee.setFirstName(employee.getFirstName());
+                existingEmployee.setLastName(employee.getLastName());
+                existingEmployee.setBirthDate(employee.getBirthDate());
+                existingEmployee.setPhoneNumber(employee.getPhoneNumber());
+                existingEmployee.setEmail(employee.getEmail());
+                session.update(existingEmployee);
+                updated = true;
+            }
+            transaction.commit();
+        } catch (Exception e) {
+            System.out.println("Error when trying to update: " + e.getMessage());
         }
         return updated;
     }
@@ -107,26 +114,17 @@ public class EmployeeDAOImp implements IEmployeeDAO<Employee> {
 
     @Override
     public Optional<Employee> findByPhoneNumber(String phoneNumber) {
-        Employee employee = new Employee();
-        String sql = "SELECT * FROM employee WHERE phone_number = ?";
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, phoneNumber);
-            ResultSet rs = preparedStatement.executeQuery();
-            if (rs.next()) {
-                employee.setCode(rs.getString(1));
-                employee.setFirstName(rs.getString(2));
-                employee.setLastName(rs.getString(3));
-                employee.setBirthDate(rs.getDate(4).toLocalDate());
-                employee.setPhoneNumber(rs.getString(5));
-                employee.setEmail(rs.getString(6));
-            } else {
-                return Optional.empty();
-            }
-        } catch (SQLException e) {
-            System.out.println("Error when trying to select");
+        try (Session session = HibernateHelper.getSessionFactory().openSession()) {
+            String hql = "FROM Employee E WHERE E.phoneNumber = :phoneNumber";
+            Query<Employee> query = session.createQuery(hql, Employee.class);
+            query.setParameter("phoneNumber", phoneNumber);
+            Employee employee = query.uniqueResult();
+
+            return Optional.of(employee);
+        } catch (Exception e) {
+            System.out.println("Error when trying to select: " + e.getMessage());
+            return Optional.empty();
         }
-        return Optional.of(employee);
     }
 }

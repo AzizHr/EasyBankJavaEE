@@ -34,6 +34,7 @@ public class ClientDAOImp implements IClientDAO<Client> {
      */
     @Override
     public Optional<Client> findByCode(String code) {
+        // find by code
         try (Session session = HibernateHelper.getSessionFactory().openSession()) {
             String hql = "FROM Client C WHERE C.code = :code";
             Query<Client> query = session.createQuery(hql, Client.class);
@@ -51,8 +52,6 @@ public class ClientDAOImp implements IClientDAO<Client> {
      * @param client
      * @return
      */
-
-
     @Override
     public Optional<Client> save(Client client) {
         try (Session session = HibernateHelper.getSessionFactory().openSession()) {
@@ -91,8 +90,6 @@ public class ClientDAOImp implements IClientDAO<Client> {
      * @param client
      * @return
      */
-
-
     public boolean update(Client client) {
         try (Session session = HibernateHelper.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
@@ -143,7 +140,4 @@ public class ClientDAOImp implements IClientDAO<Client> {
             return Optional.empty();
         }
     }
-
-
-
 }
