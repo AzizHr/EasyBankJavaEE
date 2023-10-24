@@ -15,8 +15,8 @@ public class Client extends Person {
     private String code;
     @Column(name = "address")
     private String address;
-    @Transient
-    @Column(name = "employee_code")
+    @ManyToOne
+    @JoinColumn(name = "employee_code", referencedColumnName = "code")
     private Employee employee;
 //    @Transient
 //    private List<Account> accounts;
