@@ -133,17 +133,6 @@ public class ClientServlet extends HttpServlet {
     }
 
     protected void save(HttpServletRequest request, HttpServletResponse response) {
-//        Client client = new Client();
-//        client.setCode(request.getParameter("client_code"));
-//        client.setFirstName(request.getParameter("client_firstname"));
-//        client.setLastName(request.getParameter("client_lastname"));
-//        client.setBirthDate(LocalDate.parse(request.getParameter("client_birthdate")));
-//        client.setPhoneNumber(request.getParameter("client_phone_number"));
-//        client.setAddress(request.getParameter("client_address"));
-//        client.setEmployee(employeeService.findByCode(request.getParameter("employee_code")));
-//        clientService.save(client);
-//        request.setAttribute("new_client_added_with_success", "Client added with success!");
-//        findAll(request, response);
 
         Employee employee = employeeService.findByCode(request.getParameter("employee_code"));
         if(employee != null) {

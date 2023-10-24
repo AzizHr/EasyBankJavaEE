@@ -1,6 +1,6 @@
 package enums;
 
-public enum demandStatus {
+public enum DemandStatus {
 
     ACCEPTED,
     PENDING,
