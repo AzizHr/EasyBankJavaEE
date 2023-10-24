@@ -4,15 +4,11 @@ import controllers.HibernateHelper;
 import dao.IDemandDAO;
 import database.Database;
 import entities.Demand;
-import entities.Employee;
 import entities.Simulation;
-import enums.demandStatus;
+import enums.DemandStatus;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
 import java.sql.*;
-import java.time.LocalDate;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,24 +20,6 @@ public class DemandDAOImp implements IDemandDAO<Simulation> {
      * @param simulation 
      * @return
      */
-//    @Override
-//    public Optional<Simulation> save(Simulation simulation) {
-//        String sql = "INSERT INTO demand (number, date, status, price, duration) VALUES (?, ?, ?, ?, ?)";
-//
-//        try {
-//            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-//            preparedStatement.setString(1, simulation.getNumber());
-//            preparedStatement.setObject(2, simulation.getCreateAt());
-//            preparedStatement.setObject(3, simulation.getStatus(), Types.OTHER);
-//            preparedStatement.setDouble(4, simulation.getPrice());
-//            preparedStatement.setInt(5, simulation.getDuration());
-//            preparedStatement.executeUpdate();
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//        return Optional.of(simulation);
-//    }
-
     @Override
     public Optional<Simulation> save(Simulation simulation) {
         try (Session session = HibernateHelper.getSessionFactory().openSession()) {
@@ -88,7 +66,7 @@ public class DemandDAOImp implements IDemandDAO<Simulation> {
             if(rs.next()) {
                 demand.setNumber(rs.getString(1));
                 demand.setCreateAt(rs.getDate(2).toLocalDate());
-                demand.setStatus(demandStatus.valueOf(rs.getString(3)));
+                demand.setStatus(DemandStatus.valueOf(rs.getString(3)));
                 demand.setPrice(rs.getDouble(4));
                 demand.setDuration(rs.getInt(5));
             } else {
@@ -106,7 +84,7 @@ public class DemandDAOImp implements IDemandDAO<Simulation> {
      * @return
      */
     @Override
-    public boolean updateStatus(demandStatus status, String number) {
+    public boolean updateStatus(DemandStatus status, String number) {
         boolean updated = false;
         String sql = "UPDATE demand SET status = ? WHERE number = ?";
 

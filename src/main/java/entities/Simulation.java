@@ -1,6 +1,6 @@
 package entities;
 
-import enums.demandStatus;
+import enums.DemandStatus;
 import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -20,7 +20,7 @@ public class Simulation {
     private LocalDate createAt;
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private demandStatus status;
+    private DemandStatus status;
     @Column(name = "price")
     private double price;
     @Column(name = "duration")

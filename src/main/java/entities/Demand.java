@@ -1,6 +1,6 @@
 package entities;
 
-import enums.demandStatus;
+import enums.DemandStatus;
 import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -16,14 +16,14 @@ public class Demand extends Simulation {
     private double paidMonthly;
     @Column(name = "remarks")
     private String remarks;
-    @Transient
-    @Column(name = "client_code")
+    @ManyToOne
+    @JoinColumn(name = "client_code", referencedColumnName = "code")
     private Client client;
-    @Transient
-    @Column(name = "agency_code")
+    @ManyToOne
+    @JoinColumn(name = "agency_code", referencedColumnName = "code")
     private Agency agency;
 
-    public Demand(String number, LocalDate createAt, demandStatus status, double price, int duration, double paidMonthly, String remarks, Client client, Agency agency) {
+    public Demand(String number, LocalDate createAt, DemandStatus status, double price, int duration, double paidMonthly, String remarks, Client client, Agency agency) {
         super(number, createAt, status, price, duration);
         this.paidMonthly = paidMonthly;
         this.remarks = remarks;

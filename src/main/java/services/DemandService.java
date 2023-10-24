@@ -3,7 +3,7 @@ package services;
 import daoImplementaion.DemandDAOImp;
 import entities.Demand;
 import entities.Simulation;
-import enums.demandStatus;
+import enums.DemandStatus;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -55,7 +55,7 @@ public class DemandService {
         }
     }
 
-    public  boolean update(demandStatus status, String number) {
+    public  boolean update(DemandStatus status, String number) {
 
         try {
             if(demandDAOImp.updateStatus(status, number)) {
