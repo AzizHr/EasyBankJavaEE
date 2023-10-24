@@ -34,6 +34,7 @@ public class ClientDAOImp implements IClientDAO<Client> {
      */
     @Override
     public Optional<Client> findByCode(String code) {
+        // find by code
         try (Session session = HibernateHelper.getSessionFactory().openSession()) {
             String hql = "FROM Client C WHERE C.code = :code";
             Query<Client> query = session.createQuery(hql, Client.class);
