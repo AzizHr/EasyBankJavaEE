@@ -62,6 +62,7 @@ public class EmployeeServlet extends HttpServlet {
     }
 
     protected void findAll(HttpServletRequest request, HttpServletResponse response) {
+
             List<Employee> employees = employeeService.findAll();
             if (employees.isEmpty()) {
                 request.setAttribute("no_employees_found", "No employees found");
