@@ -2,12 +2,8 @@ package daoImplementaion;
 
 import dao.ICurrentAccountDAO;
 import database.Database;
-import entities.Client;
 import entities.CurrentAccount;
-import entities.Employee;
-import entities.Person;
 import enums.accountStatus;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,20 +17,20 @@ public class CurrentAccountDAOImp implements ICurrentAccountDAO<CurrentAccount> 
     private static final EmployeeDAOImp employeeDAOImp = new EmployeeDAOImp();
 
     /**
-     * @param currentAccount 
+     * @param currentAccount
      * @return
      */
     @Override
     public Optional<CurrentAccount> save(CurrentAccount currentAccount) {
 
-        String sql = "INSERT INTO current_account (number, balance, created_at, account_status, overdraft, agency_code, client_code, employee_code) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO current_account (number, balance, created_at, account_status, overdraft, agency_code, client_code, employee_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, currentAccount.getNumber());
             preparedStatement.setDouble(2, currentAccount.getBalance());
             preparedStatement.setObject(3, currentAccount.getCreatedAt());
-            preparedStatement.setObject(4, accountStatus.Active, Types.OTHER);
+            preparedStatement.setObject(4, accountStatus.ACTIVE, Types.OTHER);
             preparedStatement.setDouble(5, currentAccount.getOverdraft());
             preparedStatement.setString(6, currentAccount.getAgency().getCode());
             preparedStatement.setString(7, currentAccount.getClient().getCode());
@@ -47,7 +43,7 @@ public class CurrentAccountDAOImp implements ICurrentAccountDAO<CurrentAccount> 
     }
 
     /**
-     * @param number 
+     * @param number
      * @return
      */
     @Override
@@ -66,7 +62,7 @@ public class CurrentAccountDAOImp implements ICurrentAccountDAO<CurrentAccount> 
     }
 
     /**
-     * @param currentAccount 
+     * @param currentAccount
      * @return
      */
     @Override
@@ -88,7 +84,7 @@ public class CurrentAccountDAOImp implements ICurrentAccountDAO<CurrentAccount> 
     }
 
     /**
-     * @param status 
+     * @param status
      * @return
      */
     @Override
@@ -108,7 +104,7 @@ public class CurrentAccountDAOImp implements ICurrentAccountDAO<CurrentAccount> 
     }
 
     /**
-     * @return 
+     * @return
      */
     @Override
     public Optional<List<CurrentAccount>> findAll() {
@@ -124,7 +120,7 @@ public class CurrentAccountDAOImp implements ICurrentAccountDAO<CurrentAccount> 
                 currentAccount.setNumber(rs.getString(1));
                 currentAccount.setBalance(rs.getDouble(2));
                 currentAccount.setCreatedAt(rs.getDate(3).toLocalDate());
-                currentAccount.setStatus(accountStatus.valueOf(rs.getString(4)));
+                currentAccount.setAccountStatus(accountStatus.valueOf(rs.getString(4)));
                 currentAccount.setOverdraft(rs.getDouble(5));
                 currentAccount.setAgency(agencyDAOImp.findByCode(rs.getString(6)).get());
                 currentAccount.setClient(clientDAOImp.findByCode(rs.getString(7)).get());
@@ -156,7 +152,7 @@ public class CurrentAccountDAOImp implements ICurrentAccountDAO<CurrentAccount> 
                 currentAccount.setNumber(rs.getString(1));
                 currentAccount.setBalance(rs.getDouble(2));
                 currentAccount.setCreatedAt(rs.getDate(3).toLocalDate());
-                currentAccount.setStatus(accountStatus.valueOf(rs.getString(4)));
+                currentAccount.setAccountStatus(accountStatus.valueOf(rs.getString(4)));
                 currentAccount.setOverdraft(rs.getDouble(5));
                 currentAccount.setAgency(agencyDAOImp.findByCode(rs.getString(6)).get());
                 currentAccount.setClient(clientDAOImp.findByCode(rs.getString(7)).get());
@@ -170,7 +166,7 @@ public class CurrentAccountDAOImp implements ICurrentAccountDAO<CurrentAccount> 
     }
 
     /**
-     * @param number 
+     * @param number
      * @return
      */
     @Override
@@ -187,7 +183,7 @@ public class CurrentAccountDAOImp implements ICurrentAccountDAO<CurrentAccount> 
                 currentAccount.setNumber(rs.getString(1));
                 currentAccount.setBalance(rs.getDouble(2));
                 currentAccount.setCreatedAt(rs.getDate(3).toLocalDate());
-                currentAccount.setStatus(accountStatus.valueOf(rs.getString(4)));
+                currentAccount.setAccountStatus(accountStatus.valueOf(rs.getString(4)));
                 currentAccount.setOverdraft(rs.getDouble(5));
                 currentAccount.setAgency(agencyDAOImp.findByCode(rs.getString(6)).get());
                 currentAccount.setClient(clientDAOImp.findByCode(rs.getString(7)).get());
@@ -200,7 +196,7 @@ public class CurrentAccountDAOImp implements ICurrentAccountDAO<CurrentAccount> 
     }
 
     /**
-     * @param number 
+     * @param number
      * @return
      */
     @Override
@@ -218,7 +214,7 @@ public class CurrentAccountDAOImp implements ICurrentAccountDAO<CurrentAccount> 
                 currentAccount.setNumber(rs.getString(1));
                 currentAccount.setBalance(rs.getDouble(2));
                 currentAccount.setCreatedAt(rs.getDate(3).toLocalDate());
-                currentAccount.setStatus(accountStatus.valueOf(rs.getString(4)));
+                currentAccount.setAccountStatus(accountStatus.valueOf(rs.getString(4)));
                 currentAccount.setOverdraft(rs.getDouble(5));
                 currentAccount.setAgency(agencyDAOImp.findByCode(rs.getString(6)).get());
                 currentAccount.setClient(clientDAOImp.findByCode(rs.getString(7)).get());
@@ -231,7 +227,7 @@ public class CurrentAccountDAOImp implements ICurrentAccountDAO<CurrentAccount> 
     }
 
     /**
-     * @param balance 
+     * @param balance
      * @param number
      * @return
      */
@@ -252,7 +248,7 @@ public class CurrentAccountDAOImp implements ICurrentAccountDAO<CurrentAccount> 
     }
 
     /**
-     * @param balance 
+     * @param balance
      * @param number
      * @return
      */

@@ -18,18 +18,7 @@ public class DemandService {
 
     public  Simulation save(Demand demand) {
 
-        try {
-            Optional<Simulation> demandOptional = demandDAOImp.save(demand);
-
-            if (demandOptional.isPresent()) {
-                return demandOptional.get();
-            } else {
-                throw new Exception("Error When Trying To Insert!");
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
+        return demandDAOImp.save(demand).orElse(null);
     }
 
     public  boolean delete(String code) {
@@ -47,17 +36,7 @@ public class DemandService {
 
     public  List<Simulation> findAll() {
 
-        try {
-            List<Simulation> demands = demandDAOImp.findAll().orElse(Collections.emptyList());
-
-            if (demands.isEmpty()) {
-                throw new Exception("No Demands Found!");
-            } else {
-                return demands;
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return demandDAOImp.findAll().orElse(Collections.emptyList());
     }
 
     public  Simulation findByCode(String number) {

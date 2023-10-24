@@ -2,7 +2,8 @@ package enums;
 
 public enum paymentType {
 
-    Deposit,
-    Withdrawal
+    DEPOSIT,
+    WITHDRAWAL,
+    PAYMENT
 
 }

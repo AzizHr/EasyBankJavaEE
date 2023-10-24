@@ -2,28 +2,26 @@ package controllers;
 
 import daoImplementaion.EmployeeDAOImp;
 import entities.Employee;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.RequestDispatcher;
 import services.EmployeeService;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import static java.lang.System.out;
 
-@WebServlet(name = "employeeServlet", urlPatterns = {"/employees"})
+@WebServlet(value = "/employees")
 public class EmployeeServlet extends HttpServlet {
+
 
     private static final EmployeeDAOImp employeeDAOImp = new EmployeeDAOImp();
     private static final EmployeeService employeeService = new EmployeeService(employeeDAOImp);
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+
         String action = request.getParameter("action");
-        response.setContentType("text/html");
 
         if(action == null) {
             findAll(request, response);
@@ -32,7 +30,7 @@ public class EmployeeServlet extends HttpServlet {
         if ("list".equals(action)) {
             findAll(request, response);
         } else if ("view".equals(action)) {
-            showPage(request, response, "create");
+            Page.show(request, response, "employees/create.jsp");
         } else if ("create".equals(action)) {
             save(request, response);
         } else if ("edit".equals(action)) {
@@ -44,7 +42,7 @@ public class EmployeeServlet extends HttpServlet {
         } else if ("search".equals(action)) {
             findByPhoneNumber(request, response);
         } else {
-            showNotFoundPage(request, response);
+            Page.show(request, response, "index.jsp");
         }
     }
 
@@ -64,20 +62,15 @@ public class EmployeeServlet extends HttpServlet {
     }
 
     protected void findAll(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            List<Employee> employees = employeeService.findAll();
 
+            List<Employee> employees = employeeService.findAll();
             if (employees.isEmpty()) {
                 request.setAttribute("no_employees_found", "No employees found");
             } else {
                 request.setAttribute("employees", employees);
             }
 
-            RequestDispatcher dispatcher = request.getRequestDispatcher("employees/index.jsp");
-            dispatcher.forward(request, response);
-        } catch (ServletException | IOException e) {
-            throw new RuntimeException(e);
-        }
+            Page.show(request, response, "employees/index.jsp");
     }
 
     protected void findByCode(HttpServletRequest request, HttpServletResponse response) {
@@ -88,15 +81,18 @@ public class EmployeeServlet extends HttpServlet {
             Employee employee = employeeService.findByCode(code);
             if (employee != null) {
                 request.setAttribute("employee", employee);
+//                out.println(employee.getFirstName());
             } else {
                 out.println("No employee found with this code!");
                 request.setAttribute("no_employee_found", "No employee was found!");
+                out.println("No employee found");
             }
         } else {
             request.setAttribute("code_is_empty", "Please provide a code!");
+            out.println("Please provide a code");
         }
 
-        showPage(request, response, "update");
+        Page.show(request, response, "employees/update.jsp");
 
     }
 
@@ -120,14 +116,6 @@ public class EmployeeServlet extends HttpServlet {
     }
 
 
-    protected void showPage(HttpServletRequest request, HttpServletResponse response, String page) {
-        try {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("employees/" + page + ".jsp");
-            dispatcher.forward(request, response);
-        } catch (ServletException | IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     protected void save(HttpServletRequest request, HttpServletResponse response) {
         Employee employee = new Employee();
@@ -158,7 +146,7 @@ public class EmployeeServlet extends HttpServlet {
             findAll(request, response);
         } else {
             request.setAttribute("code_required", "The employee code is required!");
-            showPage(request, response, "update");
+            Page.show(request, response, "employees/update.jsp");
         }
 
     }
@@ -178,13 +166,4 @@ public class EmployeeServlet extends HttpServlet {
         findAll(request, response);
     }
 
-    public void showNotFoundPage(HttpServletRequest request, HttpServletResponse response) {
-
-        try {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("404.jsp");
-            dispatcher.forward(request, response);
-        } catch (ServletException | IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

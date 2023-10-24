@@ -1,19 +1,7 @@
-<%@ page import="entities.Employee" %><%--
-  Created by IntelliJ IDEA.
-  User: Aziz
-  Date: 09/10/2023
-  Time: 13:40
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html>
-<head>
-    <title>All Employees</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/employee.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-</head>
-<body>
+<%@ page import="entities.Employee" %>
+<jsp:include page="../helpers/header.jsp" />
+<jsp:include page="../helpers/navbar.jsp" />
 
     <style>
 
@@ -99,30 +87,16 @@
             border: none;
             border-radius: 4px;
         }
-
-        .nav-wrapper {
-            box-shadow: 0 0 4px 0 #219C90;
-        }
-
-        nav {
-            width: 90%;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 30% 60%;
-            gap: 10%;
-            align-items: center;
-        }
-        ul {
-            list-style: none;
-            display: flex;
-            gap: 20px;
-        }
-        ul a {
-            text-decoration: none;
-            color: black;
-        }
         span {
             color: #219C90;
+        }
+
+        .add-button {
+            padding: 4px;
+            background: #1AACAC;
+            color: whitesmoke;
+            font-weight: bold;
+            align-self: end;
         }
 
         @media (max-width: 767px) {
@@ -140,15 +114,6 @@
         }
     </style>
 
-    <div class="nav-wrapper">
-        <nav>
-            <h1>Easy <span>Bank</span></h1>
-            <ul>
-                <a href="${pageContext.request.contextPath}/employees"><li>Employees</li></a>
-                <a href="${pageContext.request.contextPath}/clients"><li>Clients</li></a>
-            </ul>
-        </nav>
-    </div>
     <% String added_with_success = (String) request.getAttribute("new_employee_added_with_success"); %>
     <% if (added_with_success != null && !added_with_success.isEmpty()) { %>
     <div class="success">
@@ -192,12 +157,12 @@
     </div>
     <% } %>
 
-    <form class="search-form" action="${pageContext.request.contextPath}/employees?action=search" method="post">
+        <form class="search-form" action="${pageContext.request.contextPath}/employees?action=search" method="post">
 
-        <input name="phone_number" placeholder="Enter a phone number to search..." />
-        <button type="submit">Search</button>
+            <input name="phone_number" placeholder="Enter a phone number to search..." />
+            <button type="submit">Search</button>
 
-    </form>
+        </form>
 
 
     <% String no_employees_found = (String) request.getAttribute("no_employees_found"); %>
@@ -284,5 +249,4 @@
         </div>
     <% } %>
 
-</body>
-</html>
+<jsp:include page="../helpers/footer.jsp" />

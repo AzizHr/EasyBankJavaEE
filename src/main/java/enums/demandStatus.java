@@ -2,7 +2,8 @@ package enums;
 
 public enum demandStatus {
 
-    Active,
-    Late,
+    ACCEPTED,
+    PENDING,
+    REJECTED
 
 }

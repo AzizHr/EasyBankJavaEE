@@ -1,24 +1,33 @@
 package entities;
 
+
+import javax.persistence.*;
 import lombok.*;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
+@Entity
+@Table(name = "employee")
 public class Employee extends Person {
 
+    @Id
+    @Column(name = "code")
+    private String code;
+    @Column(name = "email")
     private String email;
-    private List<Operation> operations;
-    private List<MissionHistory> missionHistories;
+//    @Transient
+//    private List<Operation> operations;
+//    @Transient
+//    private List<MissionHistory> missionHistories;
 
     @Override
     public String toString() {
         return "Employee{" +
-                "email='" + email + '\'' +
-                ", operations=" + operations +
-                ", missionHistories=" + missionHistories +
+                "code='" + code + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
+
 }

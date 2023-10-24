@@ -16,7 +16,7 @@ public class PaymentDAOImp implements IPaymentDAO<Payment> {
 
 
     /**
-     * @param payment 
+     * @param payment
      * @return
      */
     @Override
@@ -39,7 +39,7 @@ public class PaymentDAOImp implements IPaymentDAO<Payment> {
     }
 
     /**
-     * @param payment 
+     * @param payment
      * @return
      */
     @Override
@@ -62,7 +62,7 @@ public class PaymentDAOImp implements IPaymentDAO<Payment> {
     }
 
     /**
-     * @param number 
+     * @param number
      * @return
      */
     @Override
@@ -82,7 +82,7 @@ public class PaymentDAOImp implements IPaymentDAO<Payment> {
     }
 
     /**
-     * @param number 
+     * @param number
      * @return
      */
     @Override

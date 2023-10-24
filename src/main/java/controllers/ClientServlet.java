@@ -1,7 +1,9 @@
 package controllers;
 
 import daoImplementaion.ClientDAOImp;
+import daoImplementaion.EmployeeDAOImp;
 import entities.Client;
+import entities.Employee;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -9,20 +11,23 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.RequestDispatcher;
 import services.ClientService;
+import services.EmployeeService;
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
-@WebServlet(name = "clientServlet", urlPatterns = {"/clients"})
+@WebServlet(value = "/clients")
 public class ClientServlet extends HttpServlet {
 
     private static final ClientDAOImp clientDAOImp = new ClientDAOImp();
     private static final ClientService clientService = new ClientService(clientDAOImp);
+    private static final EmployeeDAOImp employeeDAOImp = new EmployeeDAOImp();
+    private static final EmployeeService employeeService = new EmployeeService(employeeDAOImp);
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         String action = request.getParameter("action");
-        response.setContentType("text/html");
 
         if(action == null) {
             findAll(request, response);
@@ -31,7 +36,7 @@ public class ClientServlet extends HttpServlet {
         if ("list".equals(action)) {
             findAll(request, response);
         } else if ("view".equals(action)) {
-            showPage(request, response, "create");
+            showCreateNewClientForm(request, response);
         } else if ("create".equals(action)) {
             save(request, response);
         } else if ("edit".equals(action)) {
@@ -128,14 +133,27 @@ public class ClientServlet extends HttpServlet {
     }
 
     protected void save(HttpServletRequest request, HttpServletResponse response) {
-        Client client = new Client();
-        client.setCode(request.getParameter("client_code"));
-        client.setFirstName(request.getParameter("client_firstname"));
-        client.setLastName(request.getParameter("client_lastname"));
-        client.setBirthDate(LocalDate.parse(request.getParameter("client_birthdate")));
-        client.setPhoneNumber(request.getParameter("client_phone_number"));
-        client.setAddress(request.getParameter("client_address"));
-        clientService.save(client);
+//        Client client = new Client();
+//        client.setCode(request.getParameter("client_code"));
+//        client.setFirstName(request.getParameter("client_firstname"));
+//        client.setLastName(request.getParameter("client_lastname"));
+//        client.setBirthDate(LocalDate.parse(request.getParameter("client_birthdate")));
+//        client.setPhoneNumber(request.getParameter("client_phone_number"));
+//        client.setAddress(request.getParameter("client_address"));
+//        client.setEmployee(employeeService.findByCode(request.getParameter("employee_code")));
+//        clientService.save(client);
+//        request.setAttribute("new_client_added_with_success", "Client added with success!");
+//        findAll(request, response);
+
+        Employee employee = employeeService.findByCode(request.getParameter("employee_code"));
+        if(employee != null) {
+            Client client = new Client(request.getParameter("client_firstname"), request.getParameter("client_lastname"), LocalDate.parse(request.getParameter("client_birthdate")), request.getParameter("client_phone_number"), request.getParameter("client_code"), request.getParameter("client_address"), employee);
+            clientService.save(client);
+        } else {
+            System.out.println("employee is null");
+            System.out.println(request.getParameter("employee_code"));
+        }
+
         request.setAttribute("new_client_added_with_success", "Client added with success!");
         findAll(request, response);
     }
@@ -180,6 +198,21 @@ public class ClientServlet extends HttpServlet {
 
         try {
             RequestDispatcher dispatcher = request.getRequestDispatcher("404.jsp");
+            dispatcher.forward(request, response);
+        } catch (ServletException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected void showCreateNewClientForm(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            List<Employee> employees = employeeService.findAll();
+            if (employees.isEmpty()) {
+                request.setAttribute("no_employees_found", "No employees found");
+            } else {
+                request.setAttribute("employees", employees);
+            }
+            RequestDispatcher dispatcher = request.getRequestDispatcher("clients/create.jsp");
             dispatcher.forward(request, response);
         } catch (ServletException | IOException e) {
             throw new RuntimeException(e);

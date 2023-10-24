@@ -1,51 +1,42 @@
 package daoImplementaion;
 
+import controllers.HibernateHelper;
 import dao.IEmployeeDAO;
 import database.Database;
-import entities.Client;
 import entities.Employee;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
+import javax.enterprise.context.ApplicationScoped;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@ApplicationScoped
 public class EmployeeDAOImp implements IEmployeeDAO<Employee> {
-
     private static final Connection connection = Database.getInstance().getConnection();
-    /**
-     * @param code
-     * @return
-     */
+    private static final SessionFactory sessionFactory = HibernateHelper.getSessionFactory();
+
     @Override
     public Optional<Employee> findByCode(String code) {
-        Employee employee = new Employee();
-        String sql = "SELECT * FROM employee WHERE code = ?";
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, code);
-            ResultSet rs = preparedStatement.executeQuery();
-            if(rs.next()) {
-                employee.setCode(rs.getString(1));
-                employee.setFirstName(rs.getString(2));
-                employee.setLastName(rs.getString(3));
-                employee.setBirthDate(rs.getDate(4).toLocalDate());
-                employee.setPhoneNumber(rs.getString(5));
-                employee.setEmail(rs.getString(6));
-            } else {
-                return Optional.empty();
-            }
-        } catch (SQLException e) {
-            System.out.println("Error when trying to select");
+        try (Session session = HibernateHelper.getSessionFactory().openSession()) {
+            String hql = "FROM Employee E WHERE E.code = :code";
+            Query<Employee> query = session.createQuery(hql, Employee.class);
+            query.setParameter("code", code);
+            Employee employee = query.uniqueResult();
+
+            return Optional.of(employee);
+        } catch (Exception e) {
+            System.out.println("Error when trying to select: " + e.getMessage());
+            return Optional.empty();
         }
-        return Optional.of(employee);
     }
 
-    /**
-     * @param employee 
-     * @return
-     */
     @Override
     public Optional<Employee> save(Employee employee) {
         String sql = "INSERT INTO employee (code, first_name, last_name, birth_date, phone_number, email) VALUES (?, ?, ?, ?, ?, ?)";
@@ -65,10 +56,6 @@ public class EmployeeDAOImp implements IEmployeeDAO<Employee> {
         return Optional.of(employee);
     }
 
-    /**
-     * @param code
-     * @return
-     */
     @Override
     public boolean delete(String code) {
         boolean deleted = false;
@@ -84,13 +71,8 @@ public class EmployeeDAOImp implements IEmployeeDAO<Employee> {
         return deleted;
     }
 
-    /**
-     * @param employee 
-     * @return
-     */
     @Override
     public boolean update(Employee employee) {
-
         boolean updated = false;
 
         String sql = "UPDATE employee SET first_name = ?, last_name = ?, birth_date = ?, phone_number = ?, email = ? WHERE code = ?";
@@ -110,39 +92,19 @@ public class EmployeeDAOImp implements IEmployeeDAO<Employee> {
         return updated;
     }
 
-    /**
-     * @return 
-     */
     @Override
     public Optional<List<Employee>> findAll() {
 
         List<Employee> employees = new ArrayList<>();
-
-        String sql = "SELECT * FROM employee";
-
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
-                Employee employee = new Employee();
-                employee.setCode(rs.getString(1));
-                employee.setFirstName(rs.getString(2));
-                employee.setLastName(rs.getString(3));
-                employee.setBirthDate(rs.getDate(4).toLocalDate());
-                employee.setPhoneNumber(rs.getString(5));
-                employee.setEmail(rs.getString(6));
-                employees.add(employee);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        try (Session session = HibernateHelper.getSessionFactory().openSession()){
+            employees = session.createQuery("FROM Employee", Employee.class).list();
+        } catch (Exception e) {
+            System.out.println("error message: " + e.getMessage());
+            e.printStackTrace();
         }
         return Optional.of(employees);
     }
 
-    /**
-     * @param phoneNumber 
-     * @return
-     */
     @Override
     public Optional<Employee> findByPhoneNumber(String phoneNumber) {
         Employee employee = new Employee();
@@ -152,7 +114,7 @@ public class EmployeeDAOImp implements IEmployeeDAO<Employee> {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, phoneNumber);
             ResultSet rs = preparedStatement.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                 employee.setCode(rs.getString(1));
                 employee.setFirstName(rs.getString(2));
                 employee.setLastName(rs.getString(3));

@@ -2,8 +2,8 @@ package enums;
 
 public enum accountStatus {
 
-    Active,
-    Frozen,
-    Closed
+    ACTIVE,
+    FROZEN,
+    CLOSED
 
 }

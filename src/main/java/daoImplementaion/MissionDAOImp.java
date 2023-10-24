@@ -2,9 +2,7 @@ package daoImplementaion;
 
 import dao.IMissionDAO;
 import database.Database;
-import entities.Employee;
 import entities.Mission;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

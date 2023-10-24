@@ -4,14 +4,22 @@
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
          version="5.0">
 
-    <servlet>
-        <servlet-name>EmployeeServlet</servlet-name>
-        <servlet-class>controllers.EmployeeServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>EmployeeServlet</servlet-name>
-        <url-pattern>/employees</url-pattern>
-    </servlet-mapping>
+<!--    <servlet>-->
+<!--        <servlet-name>IndexServlet</servlet-name>-->
+<!--        <servlet-class>controllers.IndexServlet</servlet-class>-->
+<!--    </servlet>-->
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>IndexServlet</servlet-name>-->
+<!--        <url-pattern>/</url-pattern>-->
+<!--    </servlet-mapping>-->
+<!--    <servlet>-->
+<!--        <servlet-name>EmployeeServlet</servlet-name>-->
+<!--        <servlet-class>controllers.EmployeeServlet</servlet-class>-->
+<!--    </servlet>-->
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>EmployeeServlet</servlet-name>-->
+<!--        <url-pattern>/employees</url-pattern>-->
+<!--    </servlet-mapping>-->
 
 <!--    <servlet>-->
 <!--        <servlet-name>ClientServlet</servlet-name>-->
@@ -20,5 +28,14 @@
 <!--    <servlet-mapping>-->
 <!--        <servlet-name>ClientServlet</servlet-name>-->
 <!--        <url-pattern>/clients</url-pattern>-->
+<!--    </servlet-mapping>-->
+
+<!--    <servlet>-->
+<!--        <servlet-name>SimulationServlet</servlet-name>-->
+<!--        <servlet-class>controllers.SimulationServlet</servlet-class>-->
+<!--    </servlet>-->
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>SimulationServlet</servlet-name>-->
+<!--        <url-pattern>/simulation</url-pattern>-->
 <!--    </servlet-mapping>-->
 </web-app>
