@@ -2,7 +2,7 @@ package entities;
 
 import enums.DemandStatus;
 import lombok.*;
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @NoArgsConstructor
@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @Getter
 @Entity
 @Table(name = "demand")
+@Inheritance
 public class Demand extends Simulation {
 
     @Column(name = "paid_monthly")

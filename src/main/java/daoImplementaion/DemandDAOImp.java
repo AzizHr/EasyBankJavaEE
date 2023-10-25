@@ -4,11 +4,16 @@ import controllers.HibernateHelper;
 import dao.IDemandDAO;
 import database.Database;
 import entities.Demand;
+import entities.Employee;
 import entities.Simulation;
 import enums.DemandStatus;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,12 +39,29 @@ public class DemandDAOImp implements IDemandDAO<Simulation> {
     }
 
     /**
-     * @param code
+     * @param number
      * @return
      */
     @Override
-    public boolean delete(String code) {
-        return false;
+    public boolean delete(String number) {
+        boolean deleted = false;
+
+        try (Session session = HibernateHelper.getSessionFactory().openSession()) {
+
+            Transaction transaction = session.beginTransaction();
+            Simulation demand = session.createQuery("FROM Demand WHERE number = :code", Demand.class)
+                    .setParameter("number", number)
+                    .uniqueResult();
+
+            if (demand != null) {
+                session.delete(demand);
+                deleted = true;
+            }
+            transaction.commit();
+        } catch (Exception e) {
+            System.out.println("Error when trying to delete: " + e.getMessage());
+        }
+        return deleted;
     }
 
     /**
@@ -47,7 +69,14 @@ public class DemandDAOImp implements IDemandDAO<Simulation> {
      */
     @Override
     public Optional<List<Simulation>> findAll() {
-        return Optional.empty();
+        List<Simulation> demands = new ArrayList<>();
+        try (Session session = HibernateHelper.getSessionFactory().openSession()){
+            demands = session.createQuery("FROM Demand", Simulation.class).list();
+        } catch (Exception e) {
+            System.out.println("error message: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return Optional.of(demands);
     }
 
     /**
@@ -56,26 +85,18 @@ public class DemandDAOImp implements IDemandDAO<Simulation> {
      */
     @Override
     public Optional<Simulation> findByNumber(int number) {
-        Demand demand = new Demand();
-        String sql = "SELECT * FROM demand WHERE number = ?";
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, number);
-            ResultSet rs = preparedStatement.executeQuery();
-            if(rs.next()) {
-                demand.setNumber(rs.getInt(1));
-                demand.setCreateAt(rs.getDate(2).toLocalDate());
-                demand.setStatus(DemandStatus.valueOf(rs.getString(3)));
-                demand.setPrice(rs.getDouble(4));
-                demand.setDuration(rs.getInt(5));
-            } else {
-                return Optional.empty();
-            }
-        } catch (SQLException e) {
-            System.out.println("Error when trying to select");
+        try (Session session = HibernateHelper.getSessionFactory().openSession()) {
+            String hql = "FROM Demand D WHERE D.number = :number";
+            Query<Demand> query = session.createQuery(hql, Demand.class);
+            query.setParameter("number", number);
+            Demand demand = query.uniqueResult();
+
+            return Optional.of(demand);
+        } catch (Exception e) {
+            System.out.println("Error when trying to select: " + e.getMessage());
+            return Optional.empty();
         }
-        return Optional.of(demand);
     }
 
     /**
@@ -86,16 +107,27 @@ public class DemandDAOImp implements IDemandDAO<Simulation> {
     @Override
     public boolean updateStatus(DemandStatus status, String number) {
         boolean updated = false;
-        String sql = "UPDATE demand SET status = ? WHERE number = ?";
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setObject(1, status, Types.OTHER);
-            preparedStatement.setString(2, number);
-            updated = preparedStatement.executeUpdate() > 0;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        try (Session session = HibernateHelper.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+
+            Demand demand = session.bySimpleNaturalId(Demand.class).load(number);
+
+            if (demand != null) {
+
+                demand.setStatus(status);
+
+                session.saveOrUpdate(demand);
+
+                transaction.commit();
+                updated = true;
+            } else {
+                transaction.rollback();
+            }
+        } catch (HibernateException e) {
+            throw new RuntimeException("Failed to update demand status", e);
         }
+
         return updated;
     }
 }
