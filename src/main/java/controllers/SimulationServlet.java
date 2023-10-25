@@ -73,7 +73,7 @@ public class SimulationServlet extends HttpServlet {
         String number = request.getParameter("number");
 
         if(number != null && !number.isEmpty()) {
-            Simulation demand = demandService.findByCode(number);
+            Simulation demand = demandService.findByCode(Integer.parseInt(number));
             if (demand != null) {
                 request.setAttribute("demand", demand);
             } else {
@@ -110,7 +110,7 @@ public class SimulationServlet extends HttpServlet {
             Agency agency = agencyService.findByCode(request.getParameter("agency_code"));
 
             if(client != null && agency != null) {
-                Demand demand = new Demand("d-1000", LocalDate.now(), DemandStatus.PENDING, Double.parseDouble(request.getParameter("price")), Integer.parseInt(request.getParameter("duration")), Double.parseDouble(request.getParameter("paid_monthly")), request.getParameter("remarks"), client, agency);
+                Demand demand = new Demand(LocalDate.now(), DemandStatus.PENDING, Double.parseDouble(request.getParameter("price")), Integer.parseInt(request.getParameter("duration")), Double.parseDouble(request.getParameter("paid_monthly")), request.getParameter("remarks"), client, agency);
                 demandService.save(demand);
                 request.setAttribute("demand_added_with_success", "Demand added with success!");
             }

@@ -39,7 +39,7 @@ public class DemandService {
         return demandDAOImp.findAll().orElse(Collections.emptyList());
     }
 
-    public  Simulation findByCode(String number) {
+    public  Simulation findByCode(int number) {
 
         try {
 

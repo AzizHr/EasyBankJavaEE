@@ -23,8 +23,8 @@ public class Demand extends Simulation {
     @JoinColumn(name = "agency_code", referencedColumnName = "code")
     private Agency agency;
 
-    public Demand(String number, LocalDate createAt, DemandStatus status, double price, int duration, double paidMonthly, String remarks, Client client, Agency agency) {
-        super(number, createAt, status, price, duration);
+    public Demand(LocalDate createAt, DemandStatus status, double price, int duration, double paidMonthly, String remarks, Client client, Agency agency) {
+        super(createAt, status, price, duration);
         this.paidMonthly = paidMonthly;
         this.remarks = remarks;
         this.client = client;

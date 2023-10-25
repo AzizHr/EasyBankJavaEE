@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 @Setter
 @Getter
 @MappedSuperclass
@@ -15,7 +15,7 @@ public class Simulation {
 
     @Id
     @Column(name = "number")
-    private String number;
+    private int number;
     @Column(name = "create_at")
     private LocalDate createAt;
     @Enumerated(EnumType.STRING)
@@ -26,4 +26,10 @@ public class Simulation {
     @Column(name = "duration")
     private int duration;
 
+    public Simulation(LocalDate createAt, DemandStatus status, double price, int duration) {
+        this.createAt = createAt;
+        this.status = status;
+        this.price = price;
+        this.duration = duration;
+    }
 }

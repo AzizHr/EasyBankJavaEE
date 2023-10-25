@@ -55,16 +55,16 @@ public class DemandDAOImp implements IDemandDAO<Simulation> {
      * @return
      */
     @Override
-    public Optional<Simulation> findByNumber(String number) {
+    public Optional<Simulation> findByNumber(int number) {
         Demand demand = new Demand();
         String sql = "SELECT * FROM demand WHERE number = ?";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, number);
+            preparedStatement.setInt(1, number);
             ResultSet rs = preparedStatement.executeQuery();
             if(rs.next()) {
-                demand.setNumber(rs.getString(1));
+                demand.setNumber(rs.getInt(1));
                 demand.setCreateAt(rs.getDate(2).toLocalDate());
                 demand.setStatus(DemandStatus.valueOf(rs.getString(3)));
                 demand.setPrice(rs.getDouble(4));

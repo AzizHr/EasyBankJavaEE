@@ -24,7 +24,7 @@
 </div>
 <% } %>
 
-<div class="grid grid-cols-2 items-center gap-20 w-fit h-fit mx-auto">
+<div style="margin-top: 100px" class="grid grid-cols-2 items-center gap-20 w-fit h-fit mx-auto">
     <div class="font-manrope flex h-screen items-center justify-center">
         <div class="mx-auto box-border w-[365px] border bg-white p-4">
 
@@ -102,10 +102,10 @@
                         <div><input class="mt-1 w-full rounded-[4px] border border-[#A0ABBB] p-2" value="" type="date" placeholder="How many months" /></div>
                     </div>
                     <div>
-                        <input id="price_value" name="price" class="mt-1 w-full rounded-[4px] border border-[#A0ABBB] p-2" />
-                        <input id="duration_value" name="duration" class="mt-1 w-full rounded-[4px] border border-[#A0ABBB] p-2" />
-                        <input id="paid_monthly_value" name="paid_monthly" class="mt-1 w-full rounded-[4px] border border-[#A0ABBB] p-2" />
-                        <input id="client_code_value" name="client_code" class="mt-1 w-full rounded-[4px] border border-[#A0ABBB] p-2" />
+                        <input id="price_value" name="price" class="hidden mt-1 w-full rounded-[4px] border border-[#A0ABBB] p-2" />
+                        <input id="duration_value" name="duration" class="hidden mt-1 w-full rounded-[4px] border border-[#A0ABBB] p-2" />
+                        <input id="paid_monthly_value" name="paid_monthly" class="hidden mt-1 w-full rounded-[4px] border border-[#A0ABBB] p-2" />
+                        <input id="client_code_value" name="client_code" class="hidden mt-1 w-full rounded-[4px] border border-[#A0ABBB] p-2" />
                     </div>
                     <div class="mt-6">
                         <div class="font-semibold">Remarks</div>
