@@ -50,9 +50,12 @@ public class SimulationServlet extends HttpServlet {
             findClientByCode(request, response);
         } else if ("create".equals(action)) {
             save(request, response);
-        } else if ("update".equals(action)) {
+        } else if ("edit-status".equals(action)) {
+            findByNumber(request, response);
         } else if ("delete".equals(action)) {
+            delete(request, response);
         } else if ("search".equals(action)) {
+            search(request, response);
         } else {
             Page.show(request, response, "404.jsp");
         }
@@ -84,7 +87,7 @@ public class SimulationServlet extends HttpServlet {
             request.setAttribute("number_is_empty", "Please provide a number!");
         }
 
-        Page.show(request, response, "simulations/update");
+        Page.show(request, response, "simulations/update_status.jsp");
 
     }
 
@@ -98,7 +101,7 @@ public class SimulationServlet extends HttpServlet {
         } else {
             request.setAttribute("demands", demands);
         }
-        Page.show(request, response, "simulations/index.jsp");
+        Page.show(request, response, "/simulations/index.jsp");
     }
 
     private void save(HttpServletRequest request, HttpServletResponse response) {
@@ -115,6 +118,7 @@ public class SimulationServlet extends HttpServlet {
                 request.setAttribute("demand_added_with_success", "Demand added with success!");
             }
 
+//            response.sendRedirect(request.getContextPath() + "/simulations?action=view");
             RequestDispatcher dispatcher = request.getRequestDispatcher("simulations/simulation.jsp");
             dispatcher.forward(request, response);
         } catch (ServletException | IOException e) {
@@ -155,5 +159,17 @@ public class SimulationServlet extends HttpServlet {
         } catch (ServletException | IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void delete(HttpServletRequest request, HttpServletResponse response) {
+
+    }
+
+    private void search(HttpServletRequest request, HttpServletResponse response) {
+
+    }
+
+    private void editStatus(HttpServletRequest request, HttpServletResponse response) {
+
     }
 }

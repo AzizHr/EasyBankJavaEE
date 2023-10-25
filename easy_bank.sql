@@ -140,7 +140,7 @@ create table payment (
 -- create table [demand] --
 create table demand (
 
-	number serial,
+	number serial primary key ,
 	create_at date not null,
 	status varchar(255) not null,
 	price real not null,

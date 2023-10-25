@@ -2,12 +2,13 @@ package entities;
 
 import java.time.LocalDate;
 import lombok.*;
-import javax.persistence.*;
+import jakarta.persistence.*;
 @NoArgsConstructor
 @Setter
 @Getter
 @Entity
 @Table(name = "client")
+@Inheritance
 public class Client extends Person {
 
     @Id
@@ -25,7 +26,7 @@ public class Client extends Person {
         super(firstName, lastName, birthDate, phoneNumber);
         this.code = code;
         this.address = address;
-        this.employee = employee;
+//        this.employee = employee;
     }
 
     @Override

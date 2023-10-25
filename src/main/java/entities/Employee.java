@@ -1,7 +1,7 @@
 package entities;
 
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.*;
 
 @NoArgsConstructor
@@ -10,6 +10,7 @@ import lombok.*;
 @Getter
 @Entity
 @Table(name = "employee")
+@Inheritance
 public class Employee extends Person {
 
     @Id

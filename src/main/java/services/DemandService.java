@@ -21,17 +21,9 @@ public class DemandService {
         return demandDAOImp.save(demand).orElse(null);
     }
 
-    public  boolean delete(String code) {
+    public  boolean delete(String number) {
 
-        try {
-            if(demandDAOImp.delete(code)) {
-                return true;
-            } else {
-                throw new Exception("Error When Trying To Delete!");
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return demandDAOImp.delete(number);
     }
 
     public  List<Simulation> findAll() {
@@ -41,31 +33,12 @@ public class DemandService {
 
     public  Simulation findByCode(int number) {
 
-        try {
-
-            Optional<Simulation> demandOptional= demandDAOImp.findByNumber(number);
-
-            if (demandOptional.isPresent()) {
-                return demandOptional.get();
-            } else {
-                throw new Exception("No Demand With This Number Found!");
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return demandDAOImp.findByNumber(number).orElse(null);
     }
 
     public  boolean update(DemandStatus status, String number) {
 
-        try {
-            if(demandDAOImp.updateStatus(status, number)) {
-                return true;
-            } else {
-                throw new Exception("Error When Trying To Update Status!");
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return demandDAOImp.updateStatus(status, number);
     }
 
 }

@@ -2,7 +2,7 @@ package entities;
 
 import enums.DemandStatus;
 import lombok.*;
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @NoArgsConstructor
@@ -10,10 +10,10 @@ import java.time.LocalDate;
 @Setter
 @Getter
 @MappedSuperclass
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Simulation {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "number")
     private int number;
     @Column(name = "create_at")
