@@ -106,7 +106,7 @@
     }
 </style>
 
-<% String added_with_success = (String) request.getAttribute("new_demand_added_with_success"); %>
+<% String added_with_success = (String) request.getAttribute("a_demand_added_with_success"); %>
 <% if (added_with_success != null && !added_with_success.isEmpty()) { %>
 <div class="success">
     <%= added_with_success %>
@@ -128,10 +128,10 @@
 <% } %>
 
 
-<% String updated_with_success = (String) request.getAttribute("a_demand_updated_with_success"); %>
-<% if (updated_with_success != null && !updated_with_success.isEmpty()) { %>
+<% String status_updated_with_success = (String) request.getAttribute("status_updated_with_success"); %>
+<% if (status_updated_with_success != null && !status_updated_with_success.isEmpty()) { %>
 <div class="success">
-    <%= updated_with_success %>
+    <%= status_updated_with_success %>
 </div>
 <% } %>
 
@@ -144,7 +144,7 @@
 
 <form class="search-form" action="${pageContext.request.contextPath}/simulations?action=search" method="post">
 
-    <input name="code" placeholder="Enter a demand code to search..." />
+    <input name="number" placeholder="Enter a demand code to search..." />
     <button type="submit">Search</button>
 
 </form>
@@ -153,7 +153,7 @@
 <% String no_demands_found = (String) request.getAttribute("no_demands_found"); %>
 <% Demand demand = (Demand) request.getAttribute("demand"); %>
 <% if (no_demands_found != null && !no_demands_found.isEmpty()) { %>
-<div>
+<div style="margin-left: 10%; margin-right: 10%;">
     <%= no_demands_found %>
 </div>
 <% } else if(demand != null) { %>
