@@ -78,7 +78,7 @@ public class SimulationServlet extends HttpServlet {
         String number = request.getParameter("number");
 
         if(number != null && !number.isEmpty()) {
-            Simulation demand = demandService.findByCode(Integer.parseInt(number));
+            Simulation demand = demandService.findByNumber(Integer.parseInt(number));
             if (demand != null) {
                 request.setAttribute("demand", demand);
             } else {
@@ -163,7 +163,7 @@ public class SimulationServlet extends HttpServlet {
     }
 
     private void delete(HttpServletRequest request, HttpServletResponse response) {
-        Simulation demand = demandService.findByCode(Integer.parseInt(request.getParameter("number")));
+        Simulation demand = demandService.findByNumber(Integer.parseInt(request.getParameter("number")));
         if (demand != null) {
             if(demandService.delete(demand.getNumber())) {
                 request.setAttribute("a_demand_deleted_with_success", "Demand deleted with success!");
@@ -180,7 +180,7 @@ public class SimulationServlet extends HttpServlet {
         int number = Integer.parseInt(request.getParameter("number"));
 
         if(request.getParameter("number") != null && !request.getParameter("number").isEmpty()) {
-            Simulation demand = demandService.findByCode(number);
+            Simulation demand = demandService.findByNumber(number);
             if (demand != null) {
                 request.setAttribute("demand", demand);
             } else {
