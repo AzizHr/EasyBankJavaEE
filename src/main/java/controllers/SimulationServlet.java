@@ -107,17 +107,22 @@ public class SimulationServlet extends HttpServlet {
     private void save(HttpServletRequest request, HttpServletResponse response) {
 
         try {
+
             Client client = clientService.findByCode(request.getParameter("client_code"));
             out.println(client);
 
             Agency agency = agencyService.findByCode(request.getParameter("agency_code"));
 
             if(client != null && agency != null) {
-                Demand demand = new Demand(LocalDate.now(), DemandStatus.PENDING, Double.parseDouble(request.getParameter("price")), Integer.parseInt(request.getParameter("duration")), Double.parseDouble(request.getParameter("paid_monthly")), request.getParameter("remarks"), client, agency);
-                demandService.save(demand);
-                request.setAttribute("demand_added_with_success", "Demand added with success!");
+                double paidMonthly = demandService.calculatePaidMonthly(Double.parseDouble(request.getParameter("price")), Integer.parseInt(request.getParameter("duration")));
+                if(Double.parseDouble(request.getParameter("paid_monthly")) == paidMonthly) {
+                    Demand demand = new Demand(LocalDate.now(), DemandStatus.PENDING, Double.parseDouble(request.getParameter("price")), Integer.parseInt(request.getParameter("duration")), paidMonthly, request.getParameter("remarks"), client, agency);
+                    demandService.save(demand);
+                    request.setAttribute("demand_added_with_success", "Demand added with success!");
+                } else {
+                    out.println("Doesn't match");
+                }
             }
-
 //            response.sendRedirect(request.getContextPath() + "/simulations?action=view");
             RequestDispatcher dispatcher = request.getRequestDispatcher("simulations/simulation.jsp");
             dispatcher.forward(request, response);

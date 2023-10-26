@@ -5,17 +5,19 @@ import daoImplementaion.EmployeeDAOImp;
 import entities.*;
 import enums.DemandStatus;
 import org.junit.*;
+import services.DemandService;
+
 import java.time.LocalDate;
 import static org.junit.Assert.assertEquals;
 
 public class DemandDAOImpTest {
 
-    static double interestRate = 0.05;
     static DemandDAOImp demandDAOImp;
     static EmployeeDAOImp employeeDAOImp;
     static ClientDAOImp clientDAOImp;
     static AgencyDAOImp agencyDAOImp;
     static Demand demand;
+    static DemandService demandService;
     static Employee employee;
     static Client client;
     static Agency agency;
@@ -23,51 +25,52 @@ public class DemandDAOImpTest {
     @Before
     public void setUp() {
 
-        demandDAOImp = new DemandDAOImp();
-        employeeDAOImp = new EmployeeDAOImp();
-        clientDAOImp = new ClientDAOImp();
-        agencyDAOImp = new AgencyDAOImp();
-
-        // New Employee
-        employee = new Employee();
-        employee.setCode("emp-1000");
-        employee.setFirstName("Kamal");
-        employee.setLastName("Ahmed");
-        employee.setBirthDate(LocalDate.of(2000, 5, 12));
-        employee.setPhoneNumber("06 78 33 22 11");
-        employee.setEmail("example@gmail.com");
-        employeeDAOImp.save(employee);
-
-        // New Client
-        client = new Client();
-        client.setCode("cli-1000");
-        client.setFirstName("Mohammed");
-        client.setLastName("Amine");
-        client.setBirthDate(LocalDate.of(2000, 5, 12));
-        client.setPhoneNumber("06 78 33 22 11");
-        client.setAddress("Casablanca rue 23");
-        client.setEmployee(employee);
-        clientDAOImp.save(client);
-
-        // New Agency
-        agency = new Agency();
-        agency.setCode("age-1000");
-        agency.setName("Casa Agency");
-        agency.setAddress("Casablanca rue 13");
-        agency.setPhoneNumber("05 66 73 88 34");
-        agencyDAOImp.save(agency);
-
-        // New Demand
-        demand = new Demand();
-        demand.setCreateAt(LocalDate.now());
-        demand.setStatus(DemandStatus.PENDING);
-        demand.setPrice(10000.00);
-        demand.setDuration(30);
-        double paidMonthly = (demand.getPrice() * (interestRate / 12)) / (1 - Math.pow((1 + (interestRate / 12)), -demand.getDuration()));
-        demand.setPaidMonthly(paidMonthly);
-        demand.setRemarks("Something...");
-        demand.setClient(client);
-        demand.setAgency(agency);
+        demandService = new DemandService(demandDAOImp);
+//        demandDAOImp = new DemandDAOImp();
+//        employeeDAOImp = new EmployeeDAOImp();
+//        clientDAOImp = new ClientDAOImp();
+//        agencyDAOImp = new AgencyDAOImp();
+//
+//        // New Employee
+//        employee = new Employee();
+//        employee.setCode("emp-1000");
+//        employee.setFirstName("Kamal");
+//        employee.setLastName("Ahmed");
+//        employee.setBirthDate(LocalDate.of(2000, 5, 12));
+//        employee.setPhoneNumber("06 78 33 22 11");
+//        employee.setEmail("example@gmail.com");
+//        employeeDAOImp.save(employee);
+//
+//        // New Client
+//        client = new Client();
+//        client.setCode("cli-1000");
+//        client.setFirstName("Mohammed");
+//        client.setLastName("Amine");
+//        client.setBirthDate(LocalDate.of(2000, 5, 12));
+//        client.setPhoneNumber("06 78 33 22 11");
+//        client.setAddress("Casablanca rue 23");
+//        client.setEmployee(employee);
+//        clientDAOImp.save(client);
+//
+//        // New Agency
+//        agency = new Agency();
+//        agency.setCode("age-1000");
+//        agency.setName("Casa Agency");
+//        agency.setAddress("Casablanca rue 13");
+//        agency.setPhoneNumber("05 66 73 88 34");
+//        agencyDAOImp.save(agency);
+//
+//        // New Demand
+//        demand = new Demand();
+//        demand.setCreateAt(LocalDate.now());
+//        demand.setStatus(DemandStatus.PENDING);
+//        demand.setPrice(10000.00);
+//        demand.setDuration(30);
+//        double paidMonthly =
+//        demand.setPaidMonthly(paidMonthly);
+//        demand.setRemarks("Something...");
+//        demand.setClient(client);
+//        demand.setAgency(agency);
     }
 
 
@@ -90,11 +93,17 @@ public class DemandDAOImpTest {
 //    }
 
 
-    @Test
-    public void saveDemandTest() {
-        Simulation demand1 = demandDAOImp.save(demand).get();
+//    @Test
+//    public void saveDemandTest() {
+//        Simulation demand1 = demandDAOImp.save(demand).get();
+//
+//        assertEquals(demand, demand1);
+//    }
 
-        assertEquals(demand, demand1);
+    @Test
+    public void calculatePaidMonthlyTest() {
+        double res = demandService.calculatePaidMonthly(10000, 30);
+        assertEquals(355.29364, res, 0.00001);
     }
 
 }

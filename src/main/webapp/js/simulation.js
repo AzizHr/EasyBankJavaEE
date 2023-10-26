@@ -15,7 +15,7 @@ function calculateMonthlyPayment() {
 
     console.log((parseFloat(amount) * (0.05 / 12)) / (1 - Math.pow((1 + (0.05 / 12)), -parseInt(months))))
     let res = (parseFloat(amount) * (0.05 / 12)) / (1 - Math.pow((1 + (0.05 / 12)), -parseInt(months)))
-    paidMonthly.value = parseInt(res.toFixed(0))
+    paidMonthly.value = parseInt(res.toFixed(2))
 
 }
 
