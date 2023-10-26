@@ -31,7 +31,7 @@ public class DemandService {
         return demandDAOImp.findAll().orElse(Collections.emptyList());
     }
 
-    public  Simulation findByCode(int number) {
+    public  Simulation findByNumber(int number) {
 
         return demandDAOImp.findByNumber(number).orElse(null);
     }
@@ -43,17 +43,7 @@ public class DemandService {
 
     public double calculatePaidMonthly(double price, int duration) {
 
-        try {
-            if(price <= 0) {
-                throw new Exception("Price must be greater than 0");
-            } else if(duration <= 0) {
-                throw new Exception("Duration must be greater than 0");
-            } else {
-                return (price * (0.05 / 12)) / (1 - Math.pow((1 + (0.05 / 12)), -duration));
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return (price * (0.05 / 12)) / (1 - Math.pow((1 + (0.05 / 12)), -duration));
 
     }
 
