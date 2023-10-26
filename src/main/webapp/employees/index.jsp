@@ -168,7 +168,7 @@
     <% String no_employees_found = (String) request.getAttribute("no_employees_found"); %>
     <% Employee employee = (Employee) request.getAttribute("employee"); %>
     <% if (no_employees_found != null && !no_employees_found.isEmpty()) { %>
-    <div>
+    <div style="margin-left: 10%; margin-right: 10%;">
         <%= no_employees_found %>
     </div>
     <% } else if(employee != null) { %>

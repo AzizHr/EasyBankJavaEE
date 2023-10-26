@@ -43,13 +43,13 @@ public class DemandDAOImp implements IDemandDAO<Simulation> {
      * @return
      */
     @Override
-    public boolean delete(String number) {
+    public boolean delete(int number) {
         boolean deleted = false;
 
         try (Session session = HibernateHelper.getSessionFactory().openSession()) {
 
             Transaction transaction = session.beginTransaction();
-            Simulation demand = session.createQuery("FROM Demand WHERE number = :code", Demand.class)
+            Simulation demand = session.createQuery("FROM Demand WHERE number = :number", Demand.class)
                     .setParameter("number", number)
                     .uniqueResult();
 
@@ -105,20 +105,21 @@ public class DemandDAOImp implements IDemandDAO<Simulation> {
      * @return
      */
     @Override
-    public boolean updateStatus(DemandStatus status, String number) {
+    public boolean updateStatus(DemandStatus status, int number) {
         boolean updated = false;
 
         try (Session session = HibernateHelper.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
 
-            Demand demand = session.bySimpleNaturalId(Demand.class).load(number);
+            Query<Demand> query = session.createQuery("FROM Demand WHERE number = :number", Demand.class);
+            query.setParameter("number", number);
 
-            if (demand != null) {
+            List<Demand> results = query.list();
 
+            if (!results.isEmpty()) {
+                Demand demand = results.get(0);
                 demand.setStatus(status);
-
                 session.saveOrUpdate(demand);
-
                 transaction.commit();
                 updated = true;
             } else {
