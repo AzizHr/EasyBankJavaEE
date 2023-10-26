@@ -41,4 +41,20 @@ public class DemandService {
         return demandDAOImp.updateStatus(status, number);
     }
 
+    public double calculatePaidMonthly(double price, int duration) {
+
+        try {
+            if(price <= 0) {
+                throw new Exception("Price must be greater than 0");
+            } else if(duration <= 0) {
+                throw new Exception("Duration must be greater than 0");
+            } else {
+                return (price * (0.05 / 12)) / (1 - Math.pow((1 + (0.05 / 12)), -duration));
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
 }
