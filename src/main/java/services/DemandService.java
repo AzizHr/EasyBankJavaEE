@@ -3,7 +3,7 @@ package services;
 import daoImplementaion.DemandDAOImp;
 import entities.Demand;
 import entities.Simulation;
-import enums.demandStatus;
+import enums.DemandStatus;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -21,17 +21,9 @@ public class DemandService {
         return demandDAOImp.save(demand).orElse(null);
     }
 
-    public  boolean delete(String code) {
+    public  boolean delete(String number) {
 
-        try {
-            if(demandDAOImp.delete(code)) {
-                return true;
-            } else {
-                throw new Exception("Error When Trying To Delete!");
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return demandDAOImp.delete(number);
     }
 
     public  List<Simulation> findAll() {
@@ -39,33 +31,30 @@ public class DemandService {
         return demandDAOImp.findAll().orElse(Collections.emptyList());
     }
 
-    public  Simulation findByCode(String number) {
+    public  Simulation findByCode(int number) {
 
-        try {
-
-            Optional<Simulation> demandOptional= demandDAOImp.findByNumber(number);
-
-            if (demandOptional.isPresent()) {
-                return demandOptional.get();
-            } else {
-                throw new Exception("No Demand With This Number Found!");
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return demandDAOImp.findByNumber(number).orElse(null);
     }
 
-    public  boolean update(demandStatus status, String number) {
+    public  boolean update(DemandStatus status, String number) {
+
+        return demandDAOImp.updateStatus(status, number);
+    }
+
+    public double calculatePaidMonthly(double price, int duration) {
 
         try {
-            if(demandDAOImp.updateStatus(status, number)) {
-                return true;
+            if(price <= 0) {
+                throw new Exception("Price must be greater than 0");
+            } else if(duration <= 0) {
+                throw new Exception("Duration must be greater than 0");
             } else {
-                throw new Exception("Error When Trying To Update Status!");
+                return (price * (0.05 / 12)) / (1 - Math.pow((1 + (0.05 / 12)), -duration));
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
     }
 
 }

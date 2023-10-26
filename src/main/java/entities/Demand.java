@@ -1,8 +1,8 @@
 package entities;
 
-import enums.demandStatus;
+import enums.DemandStatus;
 import lombok.*;
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @NoArgsConstructor
@@ -10,21 +10,22 @@ import java.time.LocalDate;
 @Getter
 @Entity
 @Table(name = "demand")
+@Inheritance
 public class Demand extends Simulation {
 
     @Column(name = "paid_monthly")
     private double paidMonthly;
     @Column(name = "remarks")
     private String remarks;
-    @Transient
-    @Column(name = "client_code")
+    @ManyToOne
+    @JoinColumn(name = "client_code", referencedColumnName = "code")
     private Client client;
-    @Transient
-    @Column(name = "agency_code")
+    @ManyToOne
+    @JoinColumn(name = "agency_code", referencedColumnName = "code")
     private Agency agency;
 
-    public Demand(String number, LocalDate createAt, demandStatus status, double price, int duration, double paidMonthly, String remarks, Client client, Agency agency) {
-        super(number, createAt, status, price, duration);
+    public Demand(LocalDate createAt, DemandStatus status, double price, int duration, double paidMonthly, String remarks, Client client, Agency agency) {
+        super(createAt, status, price, duration);
         this.paidMonthly = paidMonthly;
         this.remarks = remarks;
         this.client = client;

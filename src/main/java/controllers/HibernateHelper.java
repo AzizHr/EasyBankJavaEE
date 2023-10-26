@@ -26,14 +26,14 @@ public class HibernateHelper {
             configuration.addAnnotatedClass(Client.class);
             configuration.addAnnotatedClass(Employee.class);
             configuration.addAnnotatedClass(Demand.class);
-            configuration.addAnnotatedClass(CurrentAccount.class);
+//            configuration.addAnnotatedClass(CurrentAccount.class);
             configuration.addAnnotatedClass(Agency.class);
-            configuration.addAnnotatedClass(Mission.class);
-            configuration.addAnnotatedClass(MissionHistory.class);
-            configuration.addAnnotatedClass(Operation.class);
-            configuration.addAnnotatedClass(Payment.class);
-            configuration.addAnnotatedClass(RecruitmentHistory.class);
-            configuration.addAnnotatedClass(SavingAccount.class);
+//            configuration.addAnnotatedClass(Mission.class);
+//            configuration.addAnnotatedClass(MissionHistory.class);
+//            configuration.addAnnotatedClass(Operation.class);
+//            configuration.addAnnotatedClass(Payment.class);
+//            configuration.addAnnotatedClass(RecruitmentHistory.class);
+//            configuration.addAnnotatedClass(SavingAccount.class);
 
             sessionFactory = configuration.buildSessionFactory();
         }
