@@ -118,7 +118,7 @@
             <label>Status</label>
             <select name="status">
                 <c:forEach items="${DemandStatus.values()}" var="status">
-                    <option value="${status}">${status.name()}</option>
+                    <option value="${status.name()}">${status.name()}</option>
                 </c:forEach>
             </select>
         </div>

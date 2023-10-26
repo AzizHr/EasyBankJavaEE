@@ -21,7 +21,7 @@ public class DemandService {
         return demandDAOImp.save(demand).orElse(null);
     }
 
-    public  boolean delete(String number) {
+    public  boolean delete(int number) {
 
         return demandDAOImp.delete(number);
     }
@@ -36,7 +36,7 @@ public class DemandService {
         return demandDAOImp.findByNumber(number).orElse(null);
     }
 
-    public  boolean update(DemandStatus status, String number) {
+    public  boolean updateStatus(DemandStatus status, int number) {
 
         return demandDAOImp.updateStatus(status, number);
     }

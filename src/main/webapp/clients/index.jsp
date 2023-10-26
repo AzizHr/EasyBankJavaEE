@@ -160,7 +160,7 @@
     <% String no_clients_found = (String) request.getAttribute("no_clients_found"); %>
     <% Client client = (Client) request.getAttribute("client"); %>
     <% if (no_clients_found != null && !no_clients_found.isEmpty()) { %>
-    <div>
+    <div style="margin-left: 10%; margin-right: 10%;">
         <%= no_clients_found %>
     </div>
     <% } else if(client != null) { %>

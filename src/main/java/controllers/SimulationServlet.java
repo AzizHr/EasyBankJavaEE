@@ -52,6 +52,8 @@ public class SimulationServlet extends HttpServlet {
             save(request, response);
         } else if ("edit-status".equals(action)) {
             findByNumber(request, response);
+        } else if ("update-status".equals(action)) {
+            updateStatus(request, response);
         } else if ("delete".equals(action)) {
             delete(request, response);
         } else if ("search".equals(action)) {
@@ -106,29 +108,23 @@ public class SimulationServlet extends HttpServlet {
 
     private void save(HttpServletRequest request, HttpServletResponse response) {
 
-        try {
+        Client client = clientService.findByCode(request.getParameter("client_code"));
+        out.println(client);
 
-            Client client = clientService.findByCode(request.getParameter("client_code"));
-            out.println(client);
+        Agency agency = agencyService.findByCode(request.getParameter("agency_code"));
 
-            Agency agency = agencyService.findByCode(request.getParameter("agency_code"));
-
-            if(client != null && agency != null) {
-                double paidMonthly = demandService.calculatePaidMonthly(Double.parseDouble(request.getParameter("price")), Integer.parseInt(request.getParameter("duration")));
-                if(Double.parseDouble(request.getParameter("paid_monthly")) == paidMonthly) {
-                    Demand demand = new Demand(LocalDate.now(), DemandStatus.PENDING, Double.parseDouble(request.getParameter("price")), Integer.parseInt(request.getParameter("duration")), paidMonthly, request.getParameter("remarks"), client, agency);
-                    demandService.save(demand);
-                    request.setAttribute("demand_added_with_success", "Demand added with success!");
-                } else {
-                    out.println("Doesn't match");
-                }
+        if(client != null && agency != null) {
+            double paidMonthly = demandService.calculatePaidMonthly(Double.parseDouble(request.getParameter("price")), Integer.parseInt(request.getParameter("duration")));
+            if(Double.parseDouble(request.getParameter("paid_monthly")) == paidMonthly) {
+                Demand demand = new Demand(LocalDate.now(), DemandStatus.PENDING, Double.parseDouble(request.getParameter("price")), Integer.parseInt(request.getParameter("duration")), paidMonthly, request.getParameter("remarks"), client, agency);
+                demandService.save(demand);
+                request.setAttribute("a_demand_added_with_success", "Demand added with success!");
+            } else {
+                out.println("Doesn't match");
             }
-//            response.sendRedirect(request.getContextPath() + "/simulations?action=view");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("simulations/simulation.jsp");
-            dispatcher.forward(request, response);
-        } catch (ServletException | IOException e) {
-            throw new RuntimeException(e);
         }
+
+        findAll(request, response);
 
     }
 
@@ -167,14 +163,47 @@ public class SimulationServlet extends HttpServlet {
     }
 
     private void delete(HttpServletRequest request, HttpServletResponse response) {
-
+        Simulation demand = demandService.findByCode(Integer.parseInt(request.getParameter("number")));
+        if (demand != null) {
+            if(demandService.delete(demand.getNumber())) {
+                request.setAttribute("a_demand_deleted_with_success", "Demand deleted with success!");
+            } else {
+                request.setAttribute("wrong_number_error", "No demand was found!");
+            }
+        } else {
+            request.setAttribute("wrong_number_error", "No demand was found!");
+        }
+        findAll(request, response);
     }
 
     private void search(HttpServletRequest request, HttpServletResponse response) {
+        int number = Integer.parseInt(request.getParameter("number"));
 
+        if(request.getParameter("number") != null && !request.getParameter("number").isEmpty()) {
+            Simulation demand = demandService.findByCode(number);
+            if (demand != null) {
+                request.setAttribute("demand", demand);
+            } else {
+                request.setAttribute("no_demand_found", "No demand was found!");
+            }
+        } else {
+            request.setAttribute("number_required", "Demand number is required!");
+        }
+
+        findAll(request, response);
     }
 
-    private void editStatus(HttpServletRequest request, HttpServletResponse response) {
+    private void updateStatus(HttpServletRequest request, HttpServletResponse response) {
 
+        DemandStatus status = DemandStatus.valueOf(request.getParameter("status"));
+        int number = Integer.parseInt(request.getParameter("number"));
+
+        if(demandService.updateStatus(status, number)) {
+            request.setAttribute("status_updated_with_success", "Demand status updated with success!");
+        } else {
+            out.println("updating error!");
+        }
+
+        findAll(request, response);
     }
 }
