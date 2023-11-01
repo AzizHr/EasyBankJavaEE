@@ -14,7 +14,6 @@ public class Page extends HttpServlet {
 
         try {
             RequestDispatcher dispatcher = request.getRequestDispatcher(path);
-
             dispatcher.forward(request, response);
         } catch (ServletException | IOException e) {
             throw new RuntimeException(e);
