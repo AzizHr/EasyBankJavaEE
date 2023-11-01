@@ -17,7 +17,6 @@ import services.DemandService;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.System.out;
@@ -115,13 +114,13 @@ public class SimulationServlet extends HttpServlet {
 
         if(client != null && agency != null) {
             double paidMonthly = demandService.calculatePaidMonthly(Double.parseDouble(request.getParameter("price")), Integer.parseInt(request.getParameter("duration")));
-            if(Double.parseDouble(request.getParameter("paid_monthly")) == paidMonthly) {
+//            if(Double.parseDouble(request.getParameter("paid_monthly")) == paidMonthly) {
                 Demand demand = new Demand(LocalDate.now(), DemandStatus.PENDING, Double.parseDouble(request.getParameter("price")), Integer.parseInt(request.getParameter("duration")), paidMonthly, request.getParameter("remarks"), client, agency);
                 demandService.save(demand);
                 request.setAttribute("a_demand_added_with_success", "Demand added with success!");
-            } else {
-                out.println("Doesn't match");
-            }
+//            } else {
+//                out.println("Doesn't match");
+//            }
         }
 
         findAll(request, response);
